@@ -80,20 +80,29 @@
     .tab-content.active { display:block; }
     .app-body { max-width:1600px;margin:0 auto;padding:22px 22px 48px; }
 
-    /* ===== KANBAN ===== */
-    .kanban-wrapper { overflow-x:auto;padding-bottom:8px; }
-    .kanban-board { display:flex;gap:14px;min-width:max-content;align-items:flex-start; }
-    .kanban-col { width:300px;min-width:300px;border-radius:14px;display:flex;flex-direction:column;max-height:calc(100vh - 130px);overflow:hidden; }
-    .col-backlog  { background:#f5f0fe88;border:1.5px solid #ddd6fe; }
-    .col-doing    { background:#eff6ff88;border:1.5px solid #bfdbfe; }
-    .col-review   { background:#fefce888;border:1.5px solid #fde68a; }
-    .col-done     { background:#f0fdf488;border:1.5px solid #bbf7d0; }
-    .col-blocked  { background:#fef2f288;border:1.5px solid #fecaca; }
-    .col-header { padding:12px 14px 11px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid transparent; }
-    .col-header .col-title { display:flex;align-items:center;gap:8px;font-weight:800;font-size:.85rem; }
-    .col-title-dot { width:9px;height:9px;border-radius:50%;flex-shrink:0; }
-    .col-header .col-count { border-radius:20px;padding:1px 10px;font-size:.76rem;font-weight:700; }
-    .col-backlog .col-header  { background:#ede9fe;border-color:#8b5cf6; color:#5b21b6; }
+    /* ===== KANBAN — layout vertical (seções horizontais) ===== */
+    .kanban-wrapper { overflow-x:visible;padding-bottom:8px; }
+    .kanban-board { display:flex;flex-direction:column;gap:10px; }
+
+    /* coluna = seção de status em largura total */
+    .kanban-col { width:100%;border-radius:14px;display:flex;flex-direction:column;overflow:hidden; }
+    .col-backlog  { background:#f5f0fe44;border:1.5px solid #ddd6fe; }
+    .col-doing    { background:#eff6ff44;border:1.5px solid #bfdbfe; }
+    .col-review   { background:#fefce844;border:1.5px solid #fde68a; }
+    .col-done     { background:#f0fdf444;border:1.5px solid #bbf7d0; }
+    .col-blocked  { background:#fef2f244;border:1.5px solid #fecaca; }
+
+    /* cabeçalho de seção */
+    .col-header { padding:11px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid transparent;cursor:pointer;user-select:none; }
+    .col-header .col-title { display:flex;align-items:center;gap:9px;font-weight:800;font-size:.9rem; }
+    .col-title-dot { width:10px;height:10px;border-radius:50%;flex-shrink:0; }
+    .col-header .col-count { border-radius:20px;padding:2px 12px;font-size:.76rem;font-weight:700; }
+    .col-header-right { display:flex;align-items:center;gap:10px; }
+    .col-toggle-chevron { font-size:.75rem;color:inherit;transition:transform .2s;opacity:.7; }
+    .kanban-col.col-collapsed .col-toggle-chevron { transform:rotate(-90deg); }
+    .kanban-col.col-collapsed .col-drop-zone { display:none; }
+
+    .col-backlog .col-header  { background:#ede9fe;border-color:#8b5cf6;color:#5b21b6; }
     .col-backlog .col-title-dot { background:#8b5cf6; }
     .col-backlog .col-count   { background:#8b5cf622;color:#5b21b6; }
     .col-doing   .col-header  { background:#dbeafe;border-color:#3b82f6;color:#1e40af; }
@@ -108,31 +117,34 @@
     .col-blocked .col-header  { background:#fee2e2;border-color:#ef4444;color:#991b1b; }
     .col-blocked .col-title-dot { background:#ef4444; }
     .col-blocked .col-count   { background:#ef444422;color:#991b1b; }
-    .col-drop-zone { flex:1;overflow-y:auto;padding:10px 10px 14px;min-height:100px;display:flex;flex-direction:column;gap:10px; }
-    .col-drop-zone::-webkit-scrollbar { width:4px; }
-    .col-drop-zone::-webkit-scrollbar-thumb { background:#d1d5db;border-radius:2px; }
-    .col-drop-zone.drag-over { background:rgba(139,92,246,.08); }
-    .empty-col { text-align:center;padding:24px 10px;color:#9ca3af;font-size:.79rem;border:2px dashed #e5e7eb;border-radius:10px;margin-top:4px; }
-    .empty-col .empty-icon { font-size:1.8rem;margin-bottom:6px; }
 
-    /* ===== DELIVERY CARD (redesign) ===== */
-    .delivery-card { background:#fff;border:1.5px solid #e5e7eb;border-radius:12px;padding:0;cursor:grab;transition:box-shadow .18s,transform .18s;box-shadow:0 1px 4px rgba(0,0,0,.05);overflow:hidden; }
-    .delivery-card:hover { border-color:#a78bfa;box-shadow:0 4px 16px rgba(124,58,237,.12);transform:translateY(-1px); }
+    /* zona de drop: grid de cards horizontais */
+    .col-drop-zone { padding:12px 14px 16px;display:flex;flex-direction:column;gap:8px;min-height:60px; }
+    .col-drop-zone.drag-over { background:rgba(139,92,246,.06); }
+    .empty-col { text-align:center;padding:18px 10px;color:#9ca3af;font-size:.79rem;border:2px dashed #e5e7eb;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:8px; }
+    .empty-col .empty-icon { font-size:1.2rem; }
+
+    /* ===== DELIVERY CARD — horizontal ===== */
+    .delivery-card { background:#fff;border:1.5px solid #e5e7eb;border-radius:12px;padding:0;cursor:pointer;transition:box-shadow .18s,border-color .18s;box-shadow:0 1px 4px rgba(0,0,0,.05);overflow:hidden; }
+    .delivery-card:hover { border-color:#a78bfa;box-shadow:0 3px 14px rgba(124,58,237,.12); }
     .delivery-card.dragging { opacity:.45;cursor:grabbing; }
-    .delivery-card.expanded { cursor:default; }
+    .delivery-card.expanded { box-shadow:0 4px 20px rgba(124,58,237,.14);border-color:#c4b5fd; }
 
-    /* card top bar */
-    .dc-top { padding:12px 13px 10px;cursor:pointer; }
-    .dc-title-row { display:flex;align-items:flex-start;gap:8px;margin-bottom:7px; }
-    .dc-icon { width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0; }
-    .dc-title { font-weight:700;font-size:.88rem;color:#111827;line-height:1.35;flex:1; }
-    .dc-chevron { font-size:.72rem;color:#9ca3af;transition:transform .22s;flex-shrink:0;margin-top:3px; }
+    /* linha principal do card (horizontal) */
+    .dc-top { padding:13px 16px;cursor:pointer;display:flex;align-items:center;gap:13px; }
+    .dc-icon { width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0; }
+    .dc-body { flex:1;min-width:0; }
+    .dc-title { font-weight:700;font-size:.92rem;color:#111827;line-height:1.3;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .dc-sub { display:flex;align-items:center;gap:7px;flex-wrap:wrap; }
+    .dc-date { font-size:.72rem;color:#6b7280;white-space:nowrap; }
+    .dc-impact-inline { font-size:.72rem;font-weight:600;color:#059669;white-space:nowrap; }
+    .dc-right { display:flex;align-items:center;gap:8px;flex-shrink:0; }
+    .dc-chevron { font-size:.7rem;color:#9ca3af;transition:transform .22s;flex-shrink:0; }
     .delivery-card.expanded .dc-chevron { transform:rotate(180deg); }
-    .dc-badges { display:flex;gap:6px;align-items:center;flex-wrap:wrap; }
 
     /* status pill */
-    .status-pill { display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:2px 9px;font-size:.7rem;font-weight:700;border:1px solid;white-space:nowrap; }
-    .sp-dot { width:6px;height:6px;border-radius:50%;flex-shrink:0; }
+    .status-pill { display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;border:1px solid;white-space:nowrap; }
+    .sp-dot { width:7px;height:7px;border-radius:50%;flex-shrink:0; }
     .sp-backlog  { background:#ede9fe;color:#5b21b6;border-color:#ddd6fe; }  .sp-backlog  .sp-dot { background:#8b5cf6; }
     .sp-doing    { background:#dbeafe;color:#1e40af;border-color:#bfdbfe; }  .sp-doing    .sp-dot { background:#3b82f6; }
     .sp-review   { background:#fef3c7;color:#92400e;border-color:#fde68a; }  .sp-review   .sp-dot { background:#f59e0b; }
@@ -142,58 +154,75 @@
     /* category badge */
     .cat-badge { display:inline-flex;align-items:center;border-radius:20px;padding:2px 9px;font-size:.7rem;font-weight:600;border:1px solid;white-space:nowrap; }
 
-    /* impact tag */
-    .dc-impact-tag { background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:5px 10px;margin:4px 13px 10px; }
-    .dc-impact-tag span { font-size:.75rem;font-weight:700;color:#059669; }
-
     /* expanded STAR detail */
-    .dc-detail { border-top:1px solid #f3f4f6;padding:14px 13px 13px;display:none; }
+    .dc-detail { border-top:1.5px solid #f3f4f6;padding:16px 16px 14px;display:none;background:#fafafa; }
     .delivery-card.expanded .dc-detail { display:block; }
 
     /* status quick-change bar */
-    .dc-status-bar { background:#fafafa;border:1px solid #f3f4f6;border-radius:9px;padding:8px 12px;display:flex;align-items:center;gap:8px;margin-bottom:13px; }
-    .dc-status-label { font-size:.75rem;font-weight:600;color:#6b7280; }
-    .dc-status-select { border:1.5px solid #e5e7eb;border-radius:7px;padding:4px 8px;font-size:.78rem;font-family:inherit;color:#111827;background:#fff;cursor:pointer; }
+    .dc-status-bar { background:#fff;border:1.5px solid #e5e7eb;border-radius:10px;padding:8px 14px;display:flex;align-items:center;gap:10px;margin-bottom:14px; }
+    .dc-status-label { font-size:.76rem;font-weight:700;color:#6b7280; }
+    .dc-status-select { border:1.5px solid #e5e7eb;border-radius:8px;padding:5px 10px;font-size:.8rem;font-family:inherit;color:#111827;background:#fff;cursor:pointer; }
     .dc-status-select:focus { outline:none;border-color:#8b5cf6; }
 
-    /* STAR blocks */
+    /* STAR blocks grid — 4 blocos em 2×2 */
     .star-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px; }
-    .star-block { border-radius:10px;padding:11px 13px;border:1px solid; }
-    .sb-s { background:#e0f2fe33;border-color:#e0f2fe; }
-    .sb-t { background:#f3e8ff33;border-color:#f3e8ff; }
-    .sb-a { background:#fff7ed33;border-color:#ffedd5; }
-    .sb-r { background:#dcfce733;border-color:#dcfce7; }
-    .star-block-header { display:flex;align-items:center;gap:6px;margin-bottom:6px; }
-    .star-block-chip { width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.7rem;flex-shrink:0; }
+    .star-grid-full { display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:10px; }
+    .star-block { border-radius:11px;padding:13px 14px;border:1.5px solid; }
+    .sb-s { background:#f0f9ff;border-color:#bae6fd; }
+    .sb-t { background:#faf5ff;border-color:#e9d5ff; }
+    .sb-a { background:#fffbeb;border-color:#fed7aa; }
+    .sb-r { background:#f0fdf4;border-color:#bbf7d0; }
+    .sb-i { background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac; }
+    .star-block-header { display:flex;align-items:center;gap:7px;margin-bottom:8px; }
+    .star-block-chip { width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.72rem;flex-shrink:0; }
     .sbc-s { background:#e0f2fe;color:#0369a1; }
     .sbc-t { background:#f3e8ff;color:#7e22ce; }
     .sbc-a { background:#fff7ed;color:#c2410c; }
     .sbc-r { background:#dcfce7;color:#166534; }
-    .star-block-label { font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.7px; }
-    .slabel-s { color:#0369a1; } .slabel-t { color:#7e22ce; } .slabel-a { color:#c2410c; } .slabel-r { color:#166534; }
-    .star-block-text { font-size:.8rem;color:#1f2937;line-height:1.55;white-space:pre-wrap; }
-    .star-block-empty { font-size:.78rem;color:#9ca3af;font-style:italic; }
+    .sbc-i { background:#bbf7d0;color:#059669; }
+    .star-block-label { font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px; }
+    .slabel-s { color:#0369a1; } .slabel-t { color:#7e22ce; } .slabel-a { color:#c2410c; } .slabel-r { color:#166534; } .slabel-i { color:#059669; }
+    .star-block-text { font-size:.82rem;color:#1f2937;line-height:1.6;white-space:pre-wrap; }
+    .star-block-empty { font-size:.79rem;color:#9ca3af;font-style:italic; }
 
     /* action list in card */
-    .action-list { list-style:none;display:flex;flex-direction:column;gap:5px; }
-    .action-item { display:flex;gap:7px;align-items:flex-start;font-size:.8rem;color:#1f2937;line-height:1.5; }
-    .action-num { background:#fdba74;color:#7c2d12;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.62rem;flex-shrink:0;margin-top:2px; }
+    .action-list { list-style:none;display:flex;flex-direction:column;gap:6px; }
+    .action-item { display:flex;gap:8px;align-items:flex-start;font-size:.82rem;color:#1f2937;line-height:1.55; }
+    .action-num { background:#fdba74;color:#7c2d12;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.62rem;flex-shrink:0;margin-top:2px; }
 
     /* card bottom buttons */
-    .dc-actions { display:flex;gap:7px;justify-content:flex-end;padding-top:10px;border-top:1px solid #f3f4f6;margin-top:2px; }
+    .dc-actions { display:flex;gap:8px;justify-content:flex-end;padding-top:12px;border-top:1px solid #e5e7eb;margin-top:4px; }
 
-    /* date */
-    .dc-date { font-size:.72rem;color:#6b7280; }
+    /* ===== STAR FORM FIELDS ===== */
+    .star-field-box { border-radius:12px;padding:14px 16px;border:1.5px solid;margin-bottom:4px; }
+    .sfb-s { background:#f0f9ff;border-color:#bae6fd; }
+    .sfb-t { background:#faf5ff;border-color:#e9d5ff; }
+    .sfb-a { background:#fffbeb;border-color:#fed7aa; }
+    .sfb-r { background:#f0fdf4;border-color:#bbf7d0; }
+    .sfb-i { background:#f0fdf4;border-color:#86efac; }
+    .star-field-header { display:flex;align-items:center;gap:9px;margin-bottom:10px; }
+    .star-field-chip { width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.8rem;flex-shrink:0; }
+    .star-field-info { display:flex;flex-direction:column; }
+    .star-field-title { font-size:.84rem;font-weight:800; }
+    .star-field-hint { font-size:.73rem;margin-top:1px; }
+    .sft-s { color:#0369a1; } .sft-t { color:#7e22ce; } .sft-a { color:#c2410c; } .sft-r { color:#166534; } .sft-i { color:#059669; }
+    .sfh-s { color:#7BBFD4; } .sfh-t { color:#A084C4; } .sfh-a { color:#C4875A; } .sfh-r { color:#5EA87D; } .sfh-i { color:#5EA87D; }
+
+    /* textareas STAR no form */
+    .star-textarea { width:100%;border:1.5px solid;border-radius:9px;padding:10px 13px;font-size:.86rem;font-family:inherit;resize:vertical;min-height:88px;outline:none;transition:border-color .18s,box-shadow .18s;line-height:1.6;color:#1f2937; }
+    .sta-s { background:#fff;border-color:#bae6fd; } .sta-s:focus { border-color:#0369a1;box-shadow:0 0 0 3px #e0f2fe88; }
+    .sta-t { background:#fff;border-color:#e9d5ff; } .sta-t:focus { border-color:#7e22ce;box-shadow:0 0 0 3px #f3e8ff88; }
+    .sta-r { background:#fff;border-color:#bbf7d0; } .sta-r:focus { border-color:#166534;box-shadow:0 0 0 3px #dcfce788; }
 
     /* form: actions list */
-    .actions-field-list { display:flex;flex-direction:column;gap:7px;margin-bottom:8px; }
-    .action-field-row { display:flex;gap:7px;align-items:flex-start; }
-    .action-num-badge { background:#fff7ed;color:#ea580c;border:1px solid #fdba74;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0;margin-top:9px; }
-    .action-field-textarea { flex:1;border:1.5px solid #fdba74;border-radius:9px;padding:9px 12px;font-size:.84rem;font-family:inherit;background:#fff7ed44;color:#1f2937;resize:vertical;min-height:52px;outline:none;transition:border-color .18s; }
+    .actions-field-list { display:flex;flex-direction:column;gap:8px;margin-bottom:9px; }
+    .action-field-row { display:flex;gap:8px;align-items:flex-start; }
+    .action-num-badge { background:#fff7ed;color:#ea580c;border:1.5px solid #fdba74;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.76rem;flex-shrink:0;margin-top:10px; }
+    .action-field-textarea { flex:1;border:1.5px solid #fdba74;border-radius:9px;padding:10px 13px;font-size:.86rem;font-family:inherit;background:#fff;color:#1f2937;resize:vertical;min-height:64px;outline:none;transition:border-color .18s;line-height:1.6; }
     .action-field-textarea:focus { border-color:#c2410c;box-shadow:0 0 0 3px rgba(194,65,12,.10); }
-    .action-remove-btn { background:none;border:none;color:#ef4444;cursor:pointer;font-size:1.3rem;padding:4px;margin-top:6px;line-height:1; }
-    .add-action-btn { background:none;border:1.5px dashed #fdba74;border-radius:9px;color:#c2410c;padding:7px 13px;cursor:pointer;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:5px;font-family:inherit;transition:background .15s; }
-    .add-action-btn:hover { background:#fff7ed; }
+    .action-remove-btn { background:none;border:none;color:#ef4444;cursor:pointer;font-size:1.4rem;padding:4px;margin-top:8px;line-height:1; }
+    .add-action-btn { background:#fff;border:1.5px dashed #fdba74;border-radius:9px;color:#c2410c;padding:9px 14px;cursor:pointer;font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:6px;font-family:inherit;transition:background .15s,border-color .15s;width:100%;justify-content:center; }
+    .add-action-btn:hover { background:#fff7ed;border-color:#fb923c; }
 
     /* ===== 1:1 LAYOUT ===== */
     .one-layout { display:grid;grid-template-columns:265px 1fr;gap:18px;align-items:start; }
@@ -493,33 +522,48 @@
     <div class="kanban-wrapper">
       <div class="kanban-board">
         <div class="kanban-col col-backlog">
-          <div class="col-header"><div class="col-title"><div class="col-title-dot"></div>Backlog</div><span class="col-count" id="count-backlog">0</span></div>
+          <div class="col-header" onclick="toggleSection(this)">
+            <div class="col-title"><div class="col-title-dot"></div>Backlog</div>
+            <div class="col-header-right"><span class="col-count" id="count-backlog">0</span><span class="col-toggle-chevron">▼</span></div>
+          </div>
           <div class="col-drop-zone" id="zone-backlog" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'backlog')">
-            <div class="empty-col" id="empty-backlog"><div class="empty-icon">📝</div>Entregas planejadas</div>
+            <div class="empty-col" id="empty-backlog"><span class="empty-icon">📝</span>Nenhuma entrega planejada</div>
           </div>
         </div>
         <div class="kanban-col col-doing">
-          <div class="col-header"><div class="col-title"><div class="col-title-dot"></div>Em Andamento</div><span class="col-count" id="count-doing">0</span></div>
+          <div class="col-header" onclick="toggleSection(this)">
+            <div class="col-title"><div class="col-title-dot"></div>Em Andamento</div>
+            <div class="col-header-right"><span class="col-count" id="count-doing">0</span><span class="col-toggle-chevron">▼</span></div>
+          </div>
           <div class="col-drop-zone" id="zone-doing" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'doing')">
-            <div class="empty-col" id="empty-doing"><div class="empty-icon">⚡</div>Nada em andamento</div>
+            <div class="empty-col" id="empty-doing"><span class="empty-icon">⚡</span>Nada em andamento</div>
           </div>
         </div>
         <div class="kanban-col col-review">
-          <div class="col-header"><div class="col-title"><div class="col-title-dot"></div>Em Revisão</div><span class="col-count" id="count-review">0</span></div>
+          <div class="col-header" onclick="toggleSection(this)">
+            <div class="col-title"><div class="col-title-dot"></div>Em Revisão</div>
+            <div class="col-header-right"><span class="col-count" id="count-review">0</span><span class="col-toggle-chevron">▼</span></div>
+          </div>
           <div class="col-drop-zone" id="zone-review" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'review')">
-            <div class="empty-col" id="empty-review"><div class="empty-icon">🔍</div>Nada em revisão</div>
+            <div class="empty-col" id="empty-review"><span class="empty-icon">🔍</span>Nada em revisão</div>
           </div>
         </div>
         <div class="kanban-col col-done">
-          <div class="col-header"><div class="col-title"><div class="col-title-dot"></div>Concluído</div><span class="col-count" id="count-done">0</span></div>
+          <div class="col-header" onclick="toggleSection(this)">
+            <div class="col-title"><div class="col-title-dot"></div>Concluído</div>
+            <div class="col-header-right"><span class="col-count" id="count-done">0</span><span class="col-toggle-chevron">▼</span></div>
+          </div>
           <div class="col-drop-zone" id="zone-done" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'done')">
-            <div class="empty-col" id="empty-done"><div class="empty-icon">🎉</div>Conquistas aqui</div>
+            <div class="empty-col" id="empty-done"><span class="empty-icon">🎉</span>Conquistas aparecerão aqui</div>
           </div>
         </div>
         <div class="kanban-col col-blocked">
-          <div class="col-header"><div class="col-title"><div class="col-title-dot"></div>Bloqueado</div><span class="col-count" id="count-blocked">0</span></div>
+          <div class="col-header" onclick="toggleSection(this)">
+            <div class="col-title"><div class="col-title-dot"></div>Bloqueado</div>
+            <div class="col-header-right"><span class="col-count" id="count-blocked">0</span><span class="col-toggle-chevron">▼</span></div>
+          </div>
           <div class="col-drop-zone" id="zone-blocked" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'blocked')">
-            <div class="empty-col" id="empty-blocked"><div class="empty-icon">🔒</div>Nenhum impedimento</div>
+            <div class="empty-col" id="empty-blocked"><span class="empty-icon">🔒</span>Nenhum impedimento</div>
           </div>
         </div>
       </div>
@@ -642,33 +686,70 @@
             </select>
           </div>
           <div class="form-group form-full">
-            <label class="form-label">🎯 Impacto <span style="font-weight:400;color:var(--nu-gray-400);font-size:.75rem">(opcional — descreva o resultado em números ou texto)</span></label>
-            <input type="text" id="dImpact" class="form-input" placeholder="Ex.: +20% de conversão, redução de 2h por semana…" />
+            <div class="star-field-box sfb-i" style="padding:11px 14px">
+              <div class="star-field-header" style="margin-bottom:7px">
+                <span class="star-field-chip sbc-i" style="font-size:.85rem">🎯</span>
+                <div class="star-field-info">
+                  <span class="star-field-title sft-i">Impacto <span style="font-weight:400;font-size:.73rem;color:#5EA87D">— opcional</span></span>
+                  <span class="star-field-hint sfh-i">Destaque o número ou resultado mais relevante desta entrega.</span>
+                </div>
+              </div>
+              <input type="text" id="dImpact" class="form-input" placeholder="Ex.: +20% de conversão, -2h por semana, NPS +8 pontos…" style="border-color:#86efac;background:#fff" />
+            </div>
           </div>
         </div>
-        <div class="star-section">
-          <div class="star-section-title">Metodologia STAR</div>
-          <div class="form-grid">
-            <div class="form-group form-full">
-              <label class="form-label"><span class="label-badge star-s">S</span>Situação</label>
-              <textarea id="dSituation" class="form-textarea" placeholder="Qual era o contexto e desafio?"></textarea>
-            </div>
-            <div class="form-group form-full">
-              <label class="form-label"><span class="label-badge star-t">T</span>Tarefa</label>
-              <textarea id="dTask" class="form-textarea" placeholder="Qual era a sua responsabilidade?"></textarea>
-            </div>
-            <div class="form-group form-full">
-              <label class="form-label"><span class="label-badge star-a">A</span>Ações Realizadas
-                <span style="font-weight:400;color:var(--nu-gray-400);font-size:.75rem;margin-left:4px">— adicione uma ou mais ações</span>
-              </label>
-              <div id="actionsFieldList" class="actions-field-list"></div>
-              <button type="button" class="add-action-btn" onclick="addActionField()">＋ Adicionar ação</button>
-            </div>
-            <div class="form-group form-full">
-              <label class="form-label"><span class="label-badge star-r">R</span>Resultado</label>
-              <textarea id="dResult" class="form-textarea" placeholder="Qual foi o resultado? Use métricas sempre que possível."></textarea>
+        <div style="margin:6px 0 4px;font-size:.78rem;font-weight:800;color:var(--nu-purple-dark);display:flex;align-items:center;gap:7px">
+          <span>✦</span> Metodologia STAR
+          <span style="flex:1;height:1px;background:var(--nu-purple-light);display:inline-block"></span>
+        </div>
+
+        <!-- S -->
+        <div class="star-field-box sfb-s" style="margin-bottom:8px">
+          <div class="star-field-header">
+            <span class="star-field-chip sbc-s">S</span>
+            <div class="star-field-info">
+              <span class="star-field-title sft-s">Situação</span>
+              <span class="star-field-hint sfh-s">Qual era o contexto? Qual foi o desafio ou problema enfrentado?</span>
             </div>
           </div>
+          <textarea id="dSituation" class="star-textarea sta-s" placeholder="Descreva o cenário, o contexto do problema ou a oportunidade que existia…" rows="3"></textarea>
+        </div>
+
+        <!-- T -->
+        <div class="star-field-box sfb-t" style="margin-bottom:8px">
+          <div class="star-field-header">
+            <span class="star-field-chip sbc-t">T</span>
+            <div class="star-field-info">
+              <span class="star-field-title sft-t">Tarefa</span>
+              <span class="star-field-hint sfh-t">Qual era a sua responsabilidade específica nesse contexto?</span>
+            </div>
+          </div>
+          <textarea id="dTask" class="star-textarea sta-t" placeholder="Descreva o que você precisava fazer, sua responsabilidade ou objetivo definido…" rows="3"></textarea>
+        </div>
+
+        <!-- A -->
+        <div class="star-field-box sfb-a" style="margin-bottom:8px">
+          <div class="star-field-header">
+            <span class="star-field-chip sbc-a">A</span>
+            <div class="star-field-info">
+              <span class="star-field-title sft-a">Ações</span>
+              <span class="star-field-hint sfh-a">O que você fez concretamente? Adicione cada ação separadamente.</span>
+            </div>
+          </div>
+          <div id="actionsFieldList" class="actions-field-list"></div>
+          <button type="button" class="add-action-btn" onclick="addActionField()">＋ Adicionar ação</button>
+        </div>
+
+        <!-- R -->
+        <div class="star-field-box sfb-r" style="margin-bottom:0">
+          <div class="star-field-header">
+            <span class="star-field-chip sbc-r">R</span>
+            <div class="star-field-info">
+              <span class="star-field-title sft-r">Resultado</span>
+              <span class="star-field-hint sfh-r">Qual foi o impacto? Prefira métricas e números concretos.</span>
+            </div>
+          </div>
+          <textarea id="dResult" class="star-textarea sta-r" placeholder="Ex.: Reduziu o tempo de atendimento em 30%, aumentou NPS em 8 pontos, evitou X reclamações…" rows="3"></textarea>
         </div>
       </form>
     </div>
@@ -817,64 +898,64 @@ function buildCard(d) {
   card.addEventListener('dragstart', ()=>{ dragId=d.id; setTimeout(()=>card.classList.add('dragging'),0); });
   card.addEventListener('dragend',   ()=>{ card.classList.remove('dragging'); dragId=null; });
 
-  const cat   = d.category || d.area || 'Outro';
-  const acts  = Array.isArray(d.actions) ? d.actions.filter(a=>a.trim()) : (d.action ? [d.action] : []);
+  const cat  = d.category || d.area || 'Outro';
+  const acts = Array.isArray(d.actions) ? d.actions.filter(a=>a.trim()) : (d.action ? [d.action] : []);
   const actionsHtml = acts.length
     ? `<ul class="action-list">${acts.map((a,i)=>`<li class="action-item"><span class="action-num">${i+1}</span>${esc(a)}</li>`).join('')}</ul>`
     : `<span class="star-block-empty">Não preenchido</span>`;
 
-  const starBlockFull = `
-    <div class="star-grid">
-      <div class="star-block sb-s">
-        <div class="star-block-header"><span class="star-block-chip sbc-s">S</span><span class="star-block-label slabel-s">Situação</span></div>
-        <div class="${d.situation?'star-block-text':'star-block-empty'}">${d.situation?esc(d.situation):'Não preenchido'}</div>
-      </div>
-      <div class="star-block sb-t">
-        <div class="star-block-header"><span class="star-block-chip sbc-t">T</span><span class="star-block-label slabel-t">Tarefa</span></div>
-        <div class="${d.task?'star-block-text':'star-block-empty'}">${d.task?esc(d.task):'Não preenchido'}</div>
-      </div>
-    </div>
-    <div class="star-block sb-a" style="margin-bottom:10px">
-      <div class="star-block-header"><span class="star-block-chip sbc-a">A</span><span class="star-block-label slabel-a">Ações Realizadas</span><span style="font-size:.68rem;color:#9ca3af;margin-left:3px">(${acts.length})</span></div>
-      ${actionsHtml}
-    </div>
-    <div class="star-grid">
-      <div class="star-block sb-r" style="${d.impact?'':'grid-column:1/-1'}">
-        <div class="star-block-header"><span class="star-block-chip sbc-r">R</span><span class="star-block-label slabel-r">Resultado</span></div>
-        <div class="${d.result?'star-block-text':'star-block-empty'}">${d.result?esc(d.result):'Não preenchido'}</div>
-      </div>
-      ${d.impact?`<div class="star-block" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac">
-        <div class="star-block-header"><span style="font-size:.85rem">🎯</span><span class="star-block-label" style="color:#059669">Impacto</span></div>
-        <div class="star-block-text" style="color:#166534;font-weight:700">${esc(d.impact)}</div>
-      </div>`:''}
-    </div>`;
-
   card.innerHTML = `
     <div class="dc-top" onclick="toggleCard('${d.id}')">
-      <div class="dc-title-row">
-        <div class="dc-icon">⭐</div>
+      <div class="dc-icon">⭐</div>
+      <div class="dc-body">
         <div class="dc-title">${esc(d.title)}</div>
+        <div class="dc-sub">
+          ${catBadge(cat)}
+          ${d.date?`<span class="dc-date">📅 ${fmtDate(d.date)}</span>`:''}
+          ${d.impact?`<span class="dc-impact-inline">🎯 ${esc(d.impact)}</span>`:''}
+        </div>
+      </div>
+      <div class="dc-right">
+        ${statusPill(d.status)}
         <span class="dc-chevron">▼</span>
       </div>
-      <div class="dc-badges">
-        ${catBadge(cat)}
-        <span class="dc-date">📅 ${fmtDate(d.date)||'—'}</span>
-        ${d.impact?`<span style="font-size:.7rem;font-weight:600;color:#059669">🎯 ${esc(d.impact)}</span>`:''}
-      </div>
     </div>
-    ${d.impact?`<div class="dc-impact-tag"><span>🎯 ${esc(d.impact)}</span></div>`:''}
     <div class="dc-detail">
       <div class="dc-status-bar">
-        <span class="dc-status-label">Status:</span>
-        ${statusPill(d.status)}
+        <span class="dc-status-label">Mover para:</span>
         <select class="dc-status-select" onchange="changeCardStatus('${d.id}',this.value)">
-          ${COLUMNS.map(c=>`<option value="${c}" ${d.status===c?'selected':''}>${COL_LABELS[c].replace(/[^\w\s]/g,'').trim()}</option>`).join('')}
+          ${COLUMNS.map(c=>`<option value="${c}" ${d.status===c?'selected':''}>${COL_LABELS[c].replace(/[^\w\sÀ-ú]/g,'').trim()}</option>`).join('')}
         </select>
+        <span style="flex:1"></span>
+        <span style="font-size:.72rem;color:#9ca3af">Criado: ${fmtDate(d.date)||'—'}</span>
       </div>
-      ${starBlockFull}
+      <div class="star-grid">
+        <div class="star-block sb-s">
+          <div class="star-block-header"><span class="star-block-chip sbc-s">S</span><span class="star-block-label slabel-s">Situação</span></div>
+          <div class="${d.situation?'star-block-text':'star-block-empty'}">${d.situation?esc(d.situation):'Não preenchido'}</div>
+        </div>
+        <div class="star-block sb-t">
+          <div class="star-block-header"><span class="star-block-chip sbc-t">T</span><span class="star-block-label slabel-t">Tarefa</span></div>
+          <div class="${d.task?'star-block-text':'star-block-empty'}">${d.task?esc(d.task):'Não preenchido'}</div>
+        </div>
+      </div>
+      <div class="star-block sb-a star-grid-full">
+        <div class="star-block-header"><span class="star-block-chip sbc-a">A</span><span class="star-block-label slabel-a">Ações Realizadas</span><span style="font-size:.68rem;color:#9ca3af;margin-left:4px">(${acts.length})</span></div>
+        ${actionsHtml}
+      </div>
+      <div class="star-grid">
+        <div class="star-block sb-r${d.impact?'':'" style="grid-column:1/-1'}">
+          <div class="star-block-header"><span class="star-block-chip sbc-r">R</span><span class="star-block-label slabel-r">Resultado</span></div>
+          <div class="${d.result?'star-block-text':'star-block-empty'}">${d.result?esc(d.result):'Não preenchido'}</div>
+        </div>
+        ${d.impact?`<div class="star-block sb-i">
+          <div class="star-block-header"><span class="star-block-chip sbc-i">🎯</span><span class="star-block-label slabel-i">Impacto</span></div>
+          <div class="star-block-text" style="color:#166534;font-weight:600">${esc(d.impact)}</div>
+        </div>`:''}
+      </div>
       <div class="dc-actions">
-        <button onclick="openEditModal('${d.id}')" style="padding:7px 14px;border-radius:7px;border:1.5px solid #d1d5db;background:#fff;color:#374151;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit">✏️ Editar</button>
-        <button onclick="deleteDelivery('${d.id}')" style="padding:7px 14px;border-radius:7px;border:1.5px solid #fca5a5;background:#fff;color:#dc2626;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit">🗑️ Excluir</button>
+        <button onclick="openEditModal('${d.id}')" style="padding:7px 16px;border-radius:8px;border:1.5px solid #d1d5db;background:#fff;color:#374151;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px">✏️ Editar</button>
+        <button onclick="deleteDelivery('${d.id}')" style="padding:7px 16px;border-radius:8px;border:1.5px solid #fca5a5;background:#fff;color:#dc2626;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px">🗑️ Excluir</button>
       </div>
     </div>`;
 
@@ -895,6 +976,11 @@ function changeCardStatus(id, newStatus) {
     d.status = newStatus; save(); renderKanban();
     toast(`Movido para ${COL_LABELS[newStatus]}`);
   }
+}
+function toggleSection(headerEl) {
+  const kanbanCol = headerEl.closest('.kanban-col');
+  if (kanbanCol) kanbanCol.classList.toggle('col-collapsed');
+  else headerEl.parentElement.classList.toggle('open'); // 1:1 sections
 }
 function renderStats() {
   const total=deliveries.length, done=deliveries.filter(d=>d.status==='done').length,
@@ -1429,8 +1515,6 @@ function buildFolgasBody(m, secKey, canInteract, isAnalista, isCoordenador, sDat
   ${listHtml}
   ${addHtml}`;
 }
-
-function toggleSection(header) { header.parentElement.classList.toggle('open'); }
 
 function toggleSectionStatus(meetingId, secKey) {
   if (!currentUserId) { toast('⚠️ Selecione seu perfil'); return; }
