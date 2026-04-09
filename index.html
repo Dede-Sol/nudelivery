@@ -370,6 +370,31 @@
     .folga-obs-input { width:100%;border:1.5px solid var(--nu-gray-200);border-radius:6px;padding:6px 8px;font-size:.8rem;font-family:inherit;color:var(--nu-text);margin-bottom:8px; }
     .folga-obs-input:focus { outline:none;border-color:var(--nu-teal); }
 
+    /* PONTO ELETRÔNICO */
+    .ponto-list { display:flex;flex-direction:column;gap:7px;margin-bottom:10px; }
+    .ponto-item { background:#fff;border:1.5px solid var(--nu-gray-200);border-radius:var(--radius-sm);padding:10px 13px;transition:border-color .15s; }
+    .ponto-item:hover { border-color:#6366f1; }
+    .ponto-row1 { display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px; }
+    .ponto-type-chip { font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap; }
+    .type-atraso          { background:#FEF5E7;color:#8C6200; }
+    .type-saida_antecipada{ background:#FFF0D9;color:#7C3A00; }
+    .type-hora_extra      { background:#E6F9F4;color:#005C42; }
+    .type-falta           { background:#FDECEA;color:#8C1A14; }
+    .type-ajuste          { background:#EDE9FE;color:#4C1D95; }
+    .ponto-date  { font-size:.8rem;font-weight:600;color:var(--nu-text); }
+    .ponto-dur   { font-size:.74rem;color:var(--nu-gray-600);font-weight:500; }
+    .ponto-actions-row { display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap; }
+    .ponto-obs-text { font-size:.78rem;color:var(--nu-gray-600);margin-top:4px;font-style:italic; }
+    .ponto-del-btn { background:transparent;border:none;cursor:pointer;color:var(--nu-gray-400);font-size:.78rem;padding:2px 4px;border-radius:4px;margin-left:auto;transition:all .15s;flex-shrink:0; }
+    .ponto-del-btn:hover { background:#FDECEA;color:var(--nu-red); }
+    .add-ponto-form { background:#fff;border:1.5px dashed var(--nu-gray-200);border-radius:var(--radius-sm);padding:12px 14px; }
+    .add-ponto-form label { font-size:.76rem;font-weight:700;color:var(--nu-gray-600);display:block;margin-bottom:4px; }
+    .ponto-form-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px; }
+    .ponto-form-grid input,.ponto-form-grid select { border:1.5px solid var(--nu-gray-200);border-radius:6px;padding:6px 8px;font-size:.8rem;font-family:inherit;color:var(--nu-text);width:100%; }
+    .ponto-form-grid input:focus,.ponto-form-grid select:focus { outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12); }
+    .ponto-obs-input { width:100%;border:1.5px solid var(--nu-gray-200);border-radius:6px;padding:6px 8px;font-size:.8rem;font-family:inherit;color:var(--nu-text);margin-bottom:8px; }
+    .ponto-obs-input:focus { outline:none;border-color:#6366f1; }
+
     /* RESUMO GERAL */
     .resumo-panel { border-top:1.5px solid var(--nu-gray-200); }
     .resumo-toggle-btn { width:100%;background:linear-gradient(135deg,var(--nu-purple-pale),#fff);border:none;cursor:pointer;padding:12px 16px;font-size:.85rem;font-weight:700;color:var(--nu-purple-dark);display:flex;align-items:center;gap:8px;justify-content:space-between;font-family:inherit;transition:background .15s; }
@@ -856,8 +881,23 @@ const SECTIONS = [
   { key:'produtividade',   label:'Produtividade',   icon:'⚡' },
   { key:'qualidade',       label:'Qualidade',       icon:'🎯' },
   { key:'desenvolvimento', label:'Desenvolvimento', icon:'🌱' },
-  { key:'folgas',          label:'Folgas & Férias',  icon:'🏖️', special:true }
+  { key:'folgas',          label:'Folgas & Férias',  icon:'🏖️', special:true },
+  { key:'ponto',           label:'Ponto Eletrônico', icon:'🕐', special:true, pontoSection:true }
 ];
+
+const PONTO_TYPES = {
+  atraso:           { label:'Atraso',             emoji:'⏰' },
+  saida_antecipada: { label:'Saída Antecipada',   emoji:'🚪' },
+  hora_extra:       { label:'Hora Extra',          emoji:'💪' },
+  falta:            { label:'Falta',               emoji:'❌' },
+  ajuste:           { label:'Ajuste de Ponto',     emoji:'🔧' },
+};
+const PONTO_STATUS = {
+  pendente:          { label:'Pendente',     cls:'status-pendente' },
+  regularizado:      { label:'Regularizado', cls:'status-finalizado' },
+  pendente_ajuste:   { label:'Pend. Ajuste', cls:'status-pendente' },
+  nao_justificado:   { label:'Não Justif.',  cls:'status-recusado' },
+};
 
 function save() {
   localStorage.setItem('nudelivery_data',     JSON.stringify(deliveries));
@@ -1366,16 +1406,22 @@ function renderSections(meetingId) {
   const isCoordenador=cu?.role==='coordenador';
 
   SECTIONS.forEach(sec=>{
-    const sData=m.sections[sec.key]||(sec.special?{status:'pendente',obs:'',entries:[]}:{status:'pendente',obs:'',tasks:[]});
+    let defaultData;
+    if (sec.pontoSection)  defaultData = {status:'pendente',obs:'',entries:[]};
+    else if (sec.special)  defaultData = {status:'pendente',obs:'',entries:[]};
+    else                   defaultData = {status:'pendente',obs:'',tasks:[]};
+    const sData = m.sections[sec.key] || defaultData;
     const isDone=sData.status==='finalizado';
     const item=document.createElement('div');
     item.className='section-item'; item.dataset.secId=sec.key;
 
     const warn=!canInteract?`<div class="no-user-warning">⚠️ Selecione seu perfil no painel ao lado para interagir.</div>`:'';
-    const permBadge=canInteract?`<div class="perm-badge perm-${cu.role}">${isCoordenador?'🎯 Coordenador — adicione tarefas e aprove folgas':'💼 Analista — preencha as observações e adicione tarefas'}</div>`:'';
+    const permBadge=canInteract?`<div class="perm-badge perm-${cu.role}">${isCoordenador?'🎯 Coordenador — visualize e regularize ocorrências':'💼 Analista — registre e acompanhe suas ocorrências'}</div>`:'';
 
     let bodyContent='';
-    if (sec.special) {
+    if (sec.pontoSection) {
+      bodyContent = buildPontoBody(m, sec.key, canInteract, isAnalista, isCoordenador, sData);
+    } else if (sec.special) {
       bodyContent = buildFolgasBody(m, sec.key, canInteract, isAnalista, isCoordenador, sData);
     } else {
       bodyContent = buildRegularBody(m, sec.key, canInteract, isAnalista, isCoordenador, sData);
@@ -1519,6 +1565,128 @@ function buildFolgasBody(m, secKey, canInteract, isAnalista, isCoordenador, sDat
   ${addHtml}`;
 }
 
+// ===================== PONTO ELETRÔNICO =====================
+function buildPontoBody(m, secKey, canInteract, isAnalista, isCoordenador, sData) {
+  const entries = sData.entries || [];
+
+  // summary chips
+  const total   = entries.length;
+  const regul   = entries.filter(e=>e.status==='regularizado').length;
+  const pend    = entries.filter(e=>e.status!=='regularizado').length;
+  const summaryHtml = total ? `
+    <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="background:#f3f4f6;border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:700;color:#374151">📊 ${total} ocorrência${total!==1?'s':''}</span>
+      ${regul?`<span style="background:#dcfce7;border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:700;color:#166534">✅ ${regul} regularizada${regul!==1?'s':''}</span>`:''}
+      ${pend?`<span style="background:#fef9c3;border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:700;color:#92400e">⏳ ${pend} pendente${pend!==1?'s':''}</span>`:''}
+    </div>` : '';
+
+  let listHtml = '';
+  if (!entries.length) {
+    listHtml = `<div class="no-tasks">Nenhuma ocorrência registrada.${canInteract?' Adicione abaixo.':''}</div>`;
+  } else {
+    listHtml = '<div class="ponto-list">';
+    entries.forEach(e => {
+      const pt  = PONTO_TYPES[e.type]  || { label: e.type, emoji:'🕐' };
+      const ps  = PONTO_STATUS[e.status] || PONTO_STATUS.pendente;
+      listHtml += `<div class="ponto-item">
+        <div class="ponto-row1">
+          <span class="ponto-type-chip type-${e.type}">${pt.emoji} ${pt.label}</span>
+          <span class="ponto-date">📅 ${fmtDate(e.date)}</span>
+          ${e.duration?`<span class="ponto-dur">⏱ ${esc(e.duration)}</span>`:''}
+          <button class="ponto-del-btn" onclick="deletePonto('${m.id}','${secKey}','${e.id}')" title="Remover">✕</button>
+        </div>
+        <div class="ponto-actions-row">
+          <span class="meeting-overall ${ps.cls}">${ps.label}</span>
+          ${isCoordenador&&canInteract&&e.status!=='regularizado'?`
+            <button class="btn btn-xs btn-green" onclick="updatePontoStatus('${m.id}','${secKey}','${e.id}','regularizado')">✅ Regularizar</button>
+            <button class="btn btn-xs btn-amber" onclick="updatePontoStatus('${m.id}','${secKey}','${e.id}','pendente_ajuste')">🔧 Pend. Ajuste</button>
+            <button class="btn btn-xs btn-danger" onclick="updatePontoStatus('${m.id}','${secKey}','${e.id}','nao_justificado')">✕ Não Justif.</button>`:''}
+        </div>
+        ${e.obs?`<div class="ponto-obs-text">💬 ${esc(e.obs)}</div>`:''}
+      </div>`;
+    });
+    listHtml += '</div>';
+  }
+
+  let addHtml = '';
+  if (canInteract) {
+    addHtml = `<div class="add-ponto-form" style="margin-top:8px">
+      <label style="font-weight:700;color:#4C1D95;font-size:.78rem;margin-bottom:8px;display:block">🕐 Registrar Ocorrência de Ponto</label>
+      <div class="ponto-form-grid">
+        <div>
+          <label>Tipo</label>
+          <select id="pontoType-${m.id}">
+            <option value="atraso">⏰ Atraso</option>
+            <option value="saida_antecipada">🚪 Saída Antecipada</option>
+            <option value="hora_extra">💪 Hora Extra</option>
+            <option value="falta">❌ Falta</option>
+            <option value="ajuste">🔧 Ajuste de Ponto</option>
+          </select>
+        </div>
+        <div>
+          <label>Data da ocorrência</label>
+          <input type="date" id="pontoDate-${m.id}" />
+        </div>
+        <div>
+          <label>Tempo (ex: 1h30)</label>
+          <input type="text" id="pontoDur-${m.id}" placeholder="Ex: 1h30, 2h…" />
+        </div>
+      </div>
+      <input type="text" class="ponto-obs-input" id="pontoObs-${m.id}" placeholder="Justificativa ou observação (opcional)…" />
+      <button class="btn btn-sm" style="background:#4C1D95;color:#fff" onclick="addPonto('${m.id}','${secKey}')">Registrar Ocorrência</button>
+    </div>`;
+  }
+
+  return `<div class="section-obs">
+    <label>📝 Observações Gerais</label>
+    <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Observações sobre o ponto eletrônico deste período…" ${!canInteract?'disabled':''} onblur="saveObs('${m.id}','${secKey}')">${esc(sData.obs||'')}</textarea>
+  </div>
+  <div class="tasks-label">📋 Ocorrências Registradas</div>
+  ${summaryHtml}${listHtml}
+  ${addHtml}`;
+}
+
+function addPonto(meetingId, secKey) {
+  if (!currentUserId) { toast('⚠️ Selecione seu perfil'); return; }
+  const typeEl = document.getElementById('pontoType-' + meetingId);
+  const dateEl = document.getElementById('pontoDate-' + meetingId);
+  const durEl  = document.getElementById('pontoDur-'  + meetingId);
+  const obsEl  = document.getElementById('pontoObs-'  + meetingId);
+  if (!typeEl || !dateEl) { toast('⚠️ Formulário não encontrado. Reabra a seção.'); return; }
+  const date = dateEl.value;
+  if (!date) { toast('⚠️ Informe a data da ocorrência'); return; }
+  const m = meetings.find(x=>x.id===meetingId); if (!m) return;
+  if (!m.sections[secKey]) m.sections[secKey] = {status:'pendente',obs:'',entries:[]};
+  if (!m.sections[secKey].entries) m.sections[secKey].entries = [];
+  m.sections[secKey].entries.push({
+    id: uid(),
+    type: typeEl.value,
+    date,
+    duration: durEl ? durEl.value.trim() : '',
+    obs: obsEl ? obsEl.value.trim() : '',
+    status: 'pendente',
+    registeredBy: currentUserId
+  });
+  save(); reExpand(meetingId, secKey);
+  toast('✅ Ocorrência registrada!');
+}
+
+function updatePontoStatus(meetingId, secKey, entryId, newStatus) {
+  if (!currentUserId) { toast('⚠️ Selecione seu perfil'); return; }
+  const m = meetings.find(x=>x.id===meetingId); if (!m) return;
+  const e = (m.sections[secKey]?.entries||[]).find(x=>x.id===entryId); if (!e) return;
+  e.status = newStatus;
+  save(); reExpand(meetingId, secKey);
+  const ps = PONTO_STATUS[newStatus];
+  toast(`🕐 Status atualizado: ${ps?.label||newStatus}`);
+}
+
+function deletePonto(meetingId, secKey, entryId) {
+  const m = meetings.find(x=>x.id===meetingId); if (!m) return;
+  m.sections[secKey].entries = m.sections[secKey].entries.filter(e=>e.id!==entryId);
+  save(); reExpand(meetingId, secKey); toast('🗑️ Ocorrência removida.');
+}
+
 function toggleSectionStatus(meetingId, secKey) {
   if (!currentUserId) { toast('⚠️ Selecione seu perfil'); return; }
   const m=meetings.find(x=>x.id===meetingId); if (!m) return;
@@ -1658,13 +1826,31 @@ function buildResumo(meetingId) {
       html+=`<div class="resumo-obs-empty">Nenhuma observação registrada.</div>`;
     }
 
-    if (sec.special) {
+    if (sec.pontoSection) {
+      // Ponto Eletrônico entries
+      const entries=sData.entries||[];
+      if (entries.length) {
+        html+=`<div style="margin-top:8px"><div class="tasks-label">Ocorrências (${entries.length}):</div><div class="resumo-folga-list">`;
+        entries.forEach(e=>{
+          const pt=PONTO_TYPES[e.type]||{label:e.type,emoji:'🕐'};
+          const ps=PONTO_STATUS[e.status]||PONTO_STATUS.pendente;
+          html+=`<div class="resumo-folga">
+            <span class="ponto-type-chip type-${e.type}" style="font-size:.7rem;padding:1px 7px">${pt.emoji} ${pt.label}</span>
+            <span>📅 ${fmtDate(e.date)}${e.duration?' · ⏱ '+esc(e.duration):''}</span>
+            <span class="meeting-overall ${ps.cls}" style="font-size:.68rem;padding:1px 7px">${ps.label}</span>
+          </div>`;
+          if (e.obs) html+=`<div style="font-size:.74rem;color:#7A6B8A;padding-left:6px;font-style:italic">💬 ${esc(e.obs)}</div>`;
+        });
+        html+=`</div></div>`;
+      } else {
+        html+=`<div class="resumo-obs-empty">Nenhuma ocorrência registrada.</div>`;
+      }
+    } else if (sec.special) {
       // Folgas entries
       const entries=sData.entries||[];
       if (entries.length) {
         html+=`<div style="margin-top:8px"><div class="tasks-label">Solicitações:</div><div class="resumo-folga-list">`;
         entries.forEach(e=>{
-          const u=users.find(x=>x.id===e.requestedBy);
           const days=calcDays(e.startDate,e.endDate);
           html+=`<div class="resumo-folga">
             <span class="folga-type-chip type-${e.type}" style="font-size:.7rem;padding:1px 7px">${e.type==='ferias'?'🏖️ Férias':'🌴 Folga'}</span>
@@ -1725,7 +1911,22 @@ function printResumo(meetingId) {
         <div style="font-size:.8rem;font-weight:700;color:#7A6B8A;margin-bottom:5px">Observações:</div>
         <div style="font-size:.82rem;color:#2D1B45;line-height:1.5;margin-bottom:10px">${sData.obs?esc(sData.obs):'<em style="color:#B0A3C0">Não preenchido</em>'}</div>`;
 
-    if (sec.special) {
+    if (sec.pontoSection) {
+      const entries=sData.entries||[];
+      if (entries.length) {
+        html+=`<div style="font-size:.8rem;font-weight:700;color:#7A6B8A;margin-bottom:5px">Ocorrências de Ponto (${entries.length}):</div>`;
+        entries.forEach(e=>{
+          const pt=PONTO_TYPES[e.type]||{label:e.type,emoji:'🕐'};
+          const ps=PONTO_STATUS[e.status]||PONTO_STATUS.pendente;
+          html+=`<div style="font-size:.8rem;margin-bottom:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <span style="background:#EDE9FE;color:#4C1D95;padding:1px 7px;border-radius:20px;font-weight:700;font-size:.7rem">${pt.emoji} ${pt.label}</span>
+            📅 ${fmtDate(e.date)}${e.duration?' · ⏱ '+esc(e.duration):''}
+            <span style="font-weight:700;color:${e.status==='regularizado'?'#005C42':e.status==='nao_justificado'?'#8C1A14':'#8C6200'}">${ps.label}</span>
+            ${e.obs?`<span style="font-size:.75rem;color:#7A6B8A;font-style:italic">— ${esc(e.obs)}</span>`:''}
+          </div>`;
+        });
+      }
+    } else if (sec.special) {
       const entries=sData.entries||[];
       if (entries.length) {
         html+=`<div style="font-size:.8rem;font-weight:700;color:#7A6B8A;margin-bottom:5px">Solicitações:</div>`;
