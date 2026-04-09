@@ -453,10 +453,11 @@
     @media print {
       *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
       body{background:#fff!important}
-      .app-header,.tab-nav,.toast-container,.card-actions,.header-actions,.header-stats{display:none!important}
+      .app-header,.tab-nav,.toast-container,.modal-overlay{display:none!important}
+      /* oculta TODO o conteúdo das abas — só o print-report aparece */
+      .tab-content{display:none!important}
       .app-body{padding:0!important;max-width:100%!important}
-      .kanban-wrapper{display:none!important}
-      .print-report{display:block!important}
+      .print-report{display:block!important;position:static!important}
       .print-report-header{background:linear-gradient(135deg,#3D0066,#8A05BE)!important;color:#fff!important;padding:26px 30px!important;margin-bottom:22px!important}
       .print-report-header h1{font-size:1.7rem;font-weight:900;margin-bottom:3px}
       .print-report-header p{font-size:.88rem;opacity:.8}
@@ -519,7 +520,7 @@
       <span style="font-size:1.1rem">📊</span>
       <span style="color:var(--nu-gray-600)">Para acessar o Levelling de Complaint Solutions <a href="https://leveling.lifecard.aca.so/?levels=complaint-solutions-ic3p&levels=complaint-solutions-ic4&levels=complaint-solutions-ic5&levels=complaint-solutions-m1&levels=complaint-solutions-m2&levels=complaint-solutions-m3" target="_blank" rel="noopener" style="color:var(--nu-purple);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--nu-purple-mid)">clique aqui</a>.</span>
     </div>
-    <div class="kanban-wrapper">
+    <div class="kanban-wrapper" id="kanbanWrapper">
       <div class="kanban-board">
         <div class="kanban-col col-backlog">
           <div class="col-header" onclick="toggleSection(this)">
@@ -568,7 +569,6 @@
         </div>
       </div>
     </div>
-    <div class="print-report" id="printReport"></div>
   </div>
 </div>
 
@@ -808,6 +808,9 @@
 </div>
 
 <div class="toast-container" id="toastContainer"></div>
+
+<!-- Área de impressão — fora das abas para funcionar de qualquer aba -->
+<div class="print-report" id="printReport"></div>
 
 <script>
 // ===================== DATA =====================
