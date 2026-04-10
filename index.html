@@ -589,6 +589,106 @@
     ::-webkit-scrollbar-track{background:transparent}
     ::-webkit-scrollbar-thumb{background:var(--nu-gray-200);border-radius:3px}
     ::-webkit-scrollbar-thumb:hover{background:var(--nu-purple-mid)}
+
+    /* ===== DIÁRIO DE BORDO ===== */
+    #tab-diario { min-height:60vh; }
+    #tab-diario .db-top-bar { display:flex;justify-content:space-between;align-items:center;padding:12px 24px;background:var(--nu-purple-pale);border-bottom:1.5px solid var(--nu-purple-light);flex-wrap:wrap;gap:10px; }
+    #tab-diario .db-top-title { font-size:.85rem;font-weight:700;color:var(--nu-purple-dark);display:flex;align-items:center;gap:8px; }
+    #tab-diario .db-perfil-badge { display:flex;align-items:center;gap:8px;background:var(--nu-purple-light);border:1.5px solid var(--nu-purple-mid);border-radius:99px;padding:6px 14px;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--nu-purple-dark);transition:all .2s; }
+    #tab-diario .db-perfil-badge:hover { background:var(--nu-purple);color:#fff; }
+    #tab-diario .db-sub-nav { background:#fff;border-bottom:2px solid var(--nu-gray-200);padding:0 24px;display:flex;gap:0; }
+    #tab-diario .db-sub-tab { padding:11px 18px;font-size:.84rem;font-weight:700;color:var(--nu-gray-600);border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;background:none;border-left:none;border-right:none;border-top:none;font-family:inherit;white-space:nowrap; }
+    #tab-diario .db-sub-tab.active { color:var(--nu-purple);border-bottom-color:var(--nu-purple); }
+    #tab-diario .db-sub-tab:hover:not(.active) { color:var(--nu-text); }
+    #tab-diario .db-container { max-width:860px;margin:0 auto;padding:24px 20px 80px; }
+    #tab-diario .db-painel { display:none; }
+    #tab-diario .db-painel.ativo { display:block; }
+    #tab-diario .db-card { background:#fff;border-radius:14px;box-shadow:var(--shadow-sm);padding:24px;margin-bottom:18px; }
+    #tab-diario .db-card-title { font-size:.96rem;font-weight:800;color:var(--nu-text);margin-bottom:5px;display:flex;align-items:center;gap:8px; }
+    #tab-diario .db-card-sub { font-size:.81rem;color:var(--nu-gray-600);margin-bottom:16px; }
+    #tab-diario .db-field { display:flex;flex-direction:column;gap:5px;margin-bottom:14px; }
+    #tab-diario .db-field label { font-size:.72rem;font-weight:700;color:var(--nu-purple);text-transform:uppercase;letter-spacing:.05em; }
+    #tab-diario .db-field input,#tab-diario .db-field select,#tab-diario .db-field textarea { border:1.5px solid var(--nu-gray-200);border-radius:var(--radius-sm);padding:9px 13px;font-size:.88rem;color:var(--nu-text);background:var(--nu-gray-100);transition:border-color .2s;outline:none;font-family:inherit;width:100%; }
+    #tab-diario .db-field input:focus,#tab-diario .db-field select:focus,#tab-diario .db-field textarea:focus { border-color:var(--nu-purple);box-shadow:0 0 0 3px rgba(138,5,190,.12);background:#fff; }
+    #tab-diario .db-field textarea { resize:vertical;min-height:76px;line-height:1.5; }
+    #tab-diario .db-field input[readonly] { background:var(--nu-purple-light);color:var(--nu-purple-dark);cursor:default; }
+    #tab-diario .db-g2 { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+    #tab-diario .db-g3 { display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px; }
+    @media(max-width:620px){#tab-diario .db-g2,#tab-diario .db-g3{grid-template-columns:1fr;}}
+    #tab-diario .db-cats { display:flex;flex-wrap:wrap;gap:9px;margin-bottom:6px; }
+    #tab-diario .db-cat-btn { padding:9px 15px;border-radius:10px;border:2px solid var(--nu-gray-200);background:#fff;font-size:.84rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;color:#444;font-family:inherit; }
+    #tab-diario .db-cat-btn:hover { border-color:var(--nu-purple-mid);background:var(--nu-purple-pale);color:var(--nu-purple);transform:translateY(-1px); }
+    #tab-diario .db-cat-btn.ativo { border-color:var(--nu-purple);background:var(--nu-purple);color:#fff;box-shadow:0 4px 12px rgba(138,5,190,.28); }
+    #tab-diario .db-cat-btn.outro { border-style:dashed; }
+    #tab-diario .db-cat-btn.ausencia { border-color:#F59E0B;color:#92400E; }
+    #tab-diario .db-cat-btn.ausencia.ativo { background:#F59E0B;border-color:#F59E0B;color:#fff; }
+    #tab-diario .db-cat-btn.customizada { border-color:var(--nu-green);color:#065F46; }
+    #tab-diario .db-cat-btn.customizada.ativo { background:var(--nu-green);border-color:var(--nu-green);color:#fff; }
+    #tab-diario .db-novo-cat-wrap { display:flex;gap:8px;align-items:flex-end;margin-top:12px; }
+    #tab-diario .db-novo-cat-wrap .db-field { flex:1;margin-bottom:0; }
+    #tab-diario .db-ausencia-wrap { margin-top:14px;padding:16px;background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:12px; }
+    #tab-diario .db-aw-titulo { font-size:.77rem;font-weight:700;color:#92400E;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px; }
+    #tab-diario .db-ausencia-opts { display:flex;flex-wrap:wrap;gap:8px; }
+    #tab-diario .db-aus-btn { padding:7px 13px;border-radius:10px;border:2px solid #FDE68A;background:#fff;font-size:.82rem;font-weight:700;color:#92400E;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;font-family:inherit; }
+    #tab-diario .db-aus-btn:hover { border-color:#F59E0B;background:#FEF3C7; }
+    #tab-diario .db-aus-btn.ativo { border-color:#F59E0B;background:#F59E0B;color:#fff; }
+    #tab-diario .db-sistemas { display:flex;flex-wrap:wrap;gap:8px;margin-top:4px; }
+    #tab-diario .db-sistema-chk { display:flex;align-items:center;gap:6px;padding:7px 13px;border:1.5px solid var(--nu-gray-200);border-radius:8px;cursor:pointer;font-size:.81rem;font-weight:600;color:#444;transition:all .2s;background:#fff;font-family:inherit; }
+    #tab-diario .db-sistema-chk:hover { border-color:var(--nu-purple-mid);background:var(--nu-purple-pale); }
+    #tab-diario .db-sistema-chk input { display:none; }
+    #tab-diario .db-sistema-chk.marcado { border-color:var(--nu-blue);background:#EFF6FF;color:var(--nu-blue); }
+    #tab-diario .db-prios { display:flex;gap:8px;margin-top:4px; }
+    #tab-diario .db-prio-btn { flex:1;padding:9px;border-radius:10px;border:2px solid var(--nu-gray-200);background:#fff;font-size:.8rem;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;font-family:inherit; }
+    #tab-diario .db-prio-btn:hover { transform:translateY(-1px); }
+    #tab-diario .db-prio-btn[data-p="baixa"] { color:#065F46; }
+    #tab-diario .db-prio-btn[data-p="baixa"].ativo { border-color:#10B981;background:#D1FAE5; }
+    #tab-diario .db-prio-btn[data-p="media"] { color:#D97706; }
+    #tab-diario .db-prio-btn[data-p="media"].ativo { border-color:#F59E0B;background:#FEF3C7; }
+    #tab-diario .db-prio-btn[data-p="alta"] { color:#DC2626; }
+    #tab-diario .db-prio-btn[data-p="alta"].ativo { border-color:#EF4444;background:#FEE2E2; }
+    #tab-diario .db-prio-btn[data-p="critica"] { color:#7C3AED; }
+    #tab-diario .db-prio-btn[data-p="critica"].ativo { border-color:#7C3AED;background:#EDE9FE; }
+    #tab-diario .db-ia-box { background:linear-gradient(135deg,var(--nu-purple-pale),var(--nu-purple-light));border:1.5px solid var(--nu-gray-200);border-radius:12px;padding:16px;margin-bottom:14px; }
+    #tab-diario .db-ia-header { display:flex;align-items:center;gap:8px;font-weight:700;font-size:.87rem;color:var(--nu-purple);margin-bottom:10px; }
+    #tab-diario .db-ia-item { background:#fff;border:1.5px solid var(--nu-purple-light);border-radius:8px;padding:10px 13px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.84rem;color:var(--nu-text);display:flex;justify-content:space-between;align-items:center; }
+    #tab-diario .db-ia-item:hover { border-color:var(--nu-purple);background:var(--nu-purple-pale); }
+    #tab-diario .db-ia-usar { font-size:.73rem;font-weight:700;color:var(--nu-purple);white-space:nowrap;margin-left:10px; }
+    #tab-diario .db-btn { padding:11px 24px;border:none;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;font-family:inherit; }
+    #tab-diario .db-btn-salvar { background:linear-gradient(135deg,var(--nu-purple),var(--nu-purple-dark));color:#fff;box-shadow:0 4px 14px rgba(138,5,190,.35);width:100%;justify-content:center;font-size:.96rem;padding:14px; }
+    #tab-diario .db-btn-salvar:hover { transform:translateY(-2px);box-shadow:0 6px 20px rgba(138,5,190,.45); }
+    #tab-diario .db-btn-limpar { background:var(--nu-gray-100);color:var(--nu-gray-600);border:1.5px solid var(--nu-gray-200) !important; }
+    #tab-diario .db-btn-limpar:hover { background:var(--nu-gray-200); }
+    #tab-diario .db-btn-verde { background:var(--nu-green);color:#fff; }
+    #tab-diario .db-btn-verde:hover { background:#00967A; }
+    #tab-diario .db-btn-cc { padding:10px 18px;background:var(--nu-green);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.84rem;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;font-family:inherit; }
+    #tab-diario .db-btn-cc:hover { background:#00967A; }
+    #tab-diario .db-hist-wrap { overflow-x:auto; }
+    #tab-diario table.db-hist { width:100%;border-collapse:collapse;font-size:.81rem; }
+    #tab-diario table.db-hist th { background:var(--nu-purple-deep);color:#fff;padding:10px 12px;text-align:left;font-size:.75rem;white-space:nowrap; }
+    #tab-diario table.db-hist td { padding:10px 12px;border-bottom:1px solid var(--nu-gray-200);vertical-align:middle; }
+    #tab-diario table.db-hist tr:hover td { background:var(--nu-purple-pale); }
+    #tab-diario table.db-hist tr:last-child td { border-bottom:none; }
+    #tab-diario .db-stats { display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px;margin-bottom:20px; }
+    #tab-diario .db-stat-card { background:#fff;border-radius:14px;padding:18px 14px;box-shadow:var(--shadow-sm);text-align:center;border-top:4px solid var(--nu-purple); }
+    #tab-diario .db-num { font-size:1.75rem;font-weight:800;color:var(--nu-text); }
+    #tab-diario .db-txt { font-size:.73rem;color:var(--nu-gray-600);font-weight:600;margin-top:4px; }
+    #tab-diario .db-stat-card.verde { border-top-color:var(--nu-green); }
+    #tab-diario .db-stat-card.azul  { border-top-color:var(--nu-blue); }
+    #tab-diario .db-stat-card.laran { border-top-color:var(--nu-amber); }
+    #tab-diario .db-vazio { text-align:center;padding:48px 20px;color:var(--nu-gray-600); }
+    #tab-diario .db-vazio .db-icon { font-size:3rem;margin-bottom:12px; }
+    #tab-diario .db-vazio p { font-size:.88rem; }
+    .db-modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:20px; }
+    .db-modal-overlay.aberto { display:flex; }
+    .db-modal { background:#fff;border-radius:20px;padding:28px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2); }
+    .db-modal h3 { font-size:1.05rem;color:var(--nu-text);margin-bottom:16px; }
+    .db-perfil-sel { display:flex;gap:12px; }
+    .db-perfil-op { flex:1;padding:16px;border:2px solid var(--nu-gray-200);border-radius:12px;text-align:center;cursor:pointer;transition:all .2s; }
+    .db-perfil-op:hover { border-color:var(--nu-purple-mid);background:var(--nu-purple-pale); }
+    .db-perfil-op.ativo { border-color:var(--nu-purple);background:var(--nu-purple);color:#fff; }
+    .db-perfil-op .pe-icon { font-size:2rem;margin-bottom:8px; }
+    .db-perfil-op p { font-size:.85rem;font-weight:700; }
+    .db-mc-preview { background:var(--nu-gray-100);border:1.5px solid var(--nu-gray-200);border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem;color:var(--nu-text); }
   </style>
 </head>
 <body>
@@ -619,6 +719,7 @@
     <div class="tab-nav-inner">
       <button class="tab-btn active" onclick="switchTab('entregas',this)">📋 Entregas STAR</button>
       <button class="tab-btn" onclick="switchTab('one-on-one',this)">🤝 Reuniões 1:1</button>
+      <button class="tab-btn" onclick="switchTab('diario',this)">📓 Diário de Bordo</button>
     </div>
   </div>
 </header>
@@ -752,6 +853,182 @@
     </div>
   </div>
 </div>
+
+<!-- ===== TAB: DIÁRIO DE BORDO ===== -->
+<div id="tab-diario" class="tab-content">
+  <!-- Top bar: título + badge perfil -->
+  <div class="db-top-bar">
+    <div class="db-top-title">📓 Diário de Bordo &nbsp;·&nbsp; <span style="font-weight:400;color:var(--nu-gray-600)">Complaint Solutions — Registro de Eventos Operacionais</span></div>
+    <button class="db-perfil-badge" onclick="dbAbrirModalPerfil()" id="db-perfil-badge">
+      <span id="db-perfil-icone">👤</span>
+      <span id="db-perfil-nome">Selecionar perfil</span>
+    </button>
+  </div>
+
+  <!-- Sub-tabs -->
+  <div class="db-sub-nav">
+    <button class="db-sub-tab active" id="db-stab-registrar" onclick="dbMudarTab('registrar',this)">📝 Novo Registro</button>
+    <button class="db-sub-tab" id="db-stab-historico"  onclick="dbMudarTab('historico',this)">📋 Histórico</button>
+    <button class="db-sub-tab" id="db-stab-painel" style="display:none" onclick="dbMudarTab('painel',this)">📊 Painel (Gestor)</button>
+  </div>
+
+  <div class="db-container">
+
+    <!-- ===== PAINEL: NOVO REGISTRO ===== -->
+    <div class="db-painel ativo" id="db-painel-registrar">
+
+      <!-- Automáticos -->
+      <div class="db-card">
+        <div class="db-card-title">🤖 Informações automáticas</div>
+        <div class="db-card-sub">Preenchidas automaticamente — confirme e ajuste se necessário</div>
+        <div class="db-g3">
+          <div class="db-field"><label>Data</label><input type="date" id="db-data" readonly></div>
+          <div class="db-field"><label>Hora de início</label><input type="time" id="db-hora-inicio"></div>
+          <div class="db-field"><label>Hora de fim</label><input type="time" id="db-hora-fim"></div>
+        </div>
+        <div class="db-field"><label>Analista responsável</label><input type="text" id="db-analista" placeholder="Seu nome"></div>
+      </div>
+
+      <!-- Tipo de evento -->
+      <div class="db-card">
+        <div class="db-card-title">⚡ Tipo de evento <span style="color:var(--nu-red);font-size:.74rem">*obrigatório</span></div>
+        <div class="db-card-sub">Selecione o tipo de ocorrência registrada</div>
+        <div class="db-cats" id="db-categorias">
+          <button class="db-cat-btn" onclick="dbSelecionarCat(this,'queda_ligacao')">📞 Queda de Ligação</button>
+          <button class="db-cat-btn" onclick="dbSelecionarCat(this,'sem_internet')">🌐 Sem Internet</button>
+          <button class="db-cat-btn" onclick="dbSelecionarCat(this,'falta_energia')">⚡ Falta de Energia</button>
+          <button class="db-cat-btn" onclick="dbSelecionarCat(this,'sistema_ind')">💻 Sistema Indisponível</button>
+          <button class="db-cat-btn" onclick="dbSelecionarCat(this,'manutencao')">🔧 Manutenção Programada</button>
+          <button class="db-cat-btn" onclick="dbSelecionarCat(this,'lentidao')">🐢 Lentidão no Sistema</button>
+          <button class="db-cat-btn" onclick="dbSelecionarCat(this,'acesso_negado')">🔒 Acesso Negado / Login</button>
+          <button class="db-cat-btn ausencia" onclick="dbSelecionarCat(this,'ausencia')">👤 Ausência</button>
+          <button class="db-cat-btn outro" id="db-btn-outro" onclick="dbSelecionarCat(this,'outro')">➕ Outro</button>
+        </div>
+        <!-- Sub-opções Ausência -->
+        <div id="db-campo-ausencia" style="display:none">
+          <div class="db-ausencia-wrap">
+            <div class="db-aw-titulo">🗂️ Tipo de ausência — selecione um</div>
+            <div class="db-ausencia-opts">
+              <button class="db-aus-btn" onclick="dbSelecionarAusencia(this,'emergencial')">🚨 Emergencial</button>
+              <button class="db-aus-btn" onclick="dbSelecionarAusencia(this,'ausencia_previa')">📅 Ausência Prévia</button>
+              <button class="db-aus-btn" onclick="dbSelecionarAusencia(this,'banco_horas')">⏱️ Banco de Horas</button>
+              <button class="db-aus-btn" onclick="dbSelecionarAusencia(this,'projetos')">📂 Projetos</button>
+              <button class="db-aus-btn" onclick="dbSelecionarAusencia(this,'ferias')">🏖️ Férias</button>
+            </div>
+          </div>
+        </div>
+        <!-- Nova categoria customizada -->
+        <div id="db-campo-outro" style="display:none">
+          <div class="db-novo-cat-wrap">
+            <div class="db-field">
+              <label>Nome da nova categoria</label>
+              <input type="text" id="db-nova-categoria" placeholder="Ex.: Problema com VPN, Queda do discador…" onkeydown="if(event.key==='Enter') dbAbrirConfirmacaoCategoria()">
+            </div>
+            <button class="db-btn-cc" onclick="dbAbrirConfirmacaoCategoria()">✅ Confirmar e Salvar</button>
+          </div>
+          <p style="font-size:.73rem;color:var(--nu-gray-600);margin-top:6px">💡 A nova categoria será adicionada como botão permanente para todos os próximos registros.</p>
+        </div>
+      </div>
+
+      <!-- Sugestão da IA -->
+      <div id="db-ia-sugestoes" style="display:none">
+        <div class="db-card">
+          <div class="db-ia-box">
+            <div class="db-ia-header">🤖 Sugestão da IA — revise antes de usar</div>
+            <p style="font-size:.79rem;color:var(--nu-purple-dark);margin-bottom:12px">Com base no tipo de evento selecionado, a IA sugere os campos abaixo:</p>
+            <div id="db-lista-sugestoes"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detalhes do evento -->
+      <div class="db-card">
+        <div class="db-card-title">📝 Detalhes do evento</div>
+        <div class="db-field">
+          <label>Descrição do evento <span style="color:var(--nu-red);font-size:.73rem">*obrigatório</span></label>
+          <textarea id="db-descricao" placeholder="Descreva o que aconteceu, quando percebeu e como foi identificado…"></textarea>
+        </div>
+        <div class="db-g2">
+          <div class="db-field"><label>Impacto observado</label><textarea id="db-impacto" placeholder="Ex.: Atendimentos interrompidos por ~15 min, cerca de 20 chamadas afetadas…" style="min-height:68px"></textarea></div>
+          <div class="db-field"><label>Ação tomada</label><textarea id="db-acao" placeholder="Ex.: Reiniciado o roteador às 14h32. TI acionado via ticket #1234…" style="min-height:68px"></textarea></div>
+        </div>
+        <div class="db-field">
+          <label>Sistemas afetados</label>
+          <div class="db-sistemas" id="db-sistemas">
+            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="Discador"> 📞 Discador</label>
+            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="CRM"> 💼 CRM</label>
+            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="E-mail"> 📧 E-mail</label>
+            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="VPN"> 🔐 VPN</label>
+            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="Internet"> 🌐 Internet</label>
+            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="Energia"> ⚡ Energia</label>
+            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="Todos"> ⚠️ Todos</label>
+          </div>
+        </div>
+        <div class="db-field" style="margin-top:4px">
+          <label>Prioridade / Severidade</label>
+          <div class="db-prios">
+            <button class="db-prio-btn" data-p="baixa"   onclick="dbSelecionarPrio(this)">🟢 Baixa</button>
+            <button class="db-prio-btn" data-p="media"   onclick="dbSelecionarPrio(this)">🟡 Média</button>
+            <button class="db-prio-btn" data-p="alta"    onclick="dbSelecionarPrio(this)">🟠 Alta</button>
+            <button class="db-prio-btn" data-p="critica" onclick="dbSelecionarPrio(this)">🔴 Crítica</button>
+          </div>
+        </div>
+        <div class="db-field">
+          <label>Observações adicionais</label>
+          <input type="text" id="db-observacoes" placeholder="Qualquer informação extra (opcional)…">
+        </div>
+      </div>
+
+      <!-- Botão salvar -->
+      <button class="db-btn db-btn-salvar" onclick="dbSalvarRegistro()">✅ Confirmar e Salvar Registro</button>
+      <div style="text-align:center;margin-top:12px">
+        <button class="db-btn db-btn-limpar" onclick="dbLimparFormulario()">🔄 Limpar formulário</button>
+      </div>
+    </div><!-- /painel registrar -->
+
+    <!-- ===== PAINEL: HISTÓRICO ===== -->
+    <div class="db-painel" id="db-painel-historico">
+      <div class="db-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div class="db-card-title">📋 Histórico de Registros</div>
+            <div class="db-card-sub">Todos os eventos registrados neste dispositivo</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="db-btn db-btn-verde" onclick="dbExportarCSV()" style="padding:9px 16px;font-size:.81rem">📥 Exportar CSV</button>
+            <button class="db-btn db-btn-limpar" onclick="dbLimparHistorico()" style="padding:9px 16px;font-size:.81rem">🗑️ Limpar tudo</button>
+          </div>
+        </div>
+        <div id="db-conteudo-historico">
+          <div class="db-vazio"><div class="db-icon">📭</div><p>Nenhum registro ainda.<br>Faça seu primeiro registro na aba "Novo Registro".</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAINEL: GESTOR ===== -->
+    <div class="db-painel" id="db-painel-painel">
+      <div class="db-stats">
+        <div class="db-stat-card"><div class="db-num" id="db-stat-total">0</div><div class="db-txt">Total de registros</div></div>
+        <div class="db-stat-card verde"><div class="db-num" id="db-stat-hoje">0</div><div class="db-txt">Hoje</div></div>
+        <div class="db-stat-card azul"><div class="db-num" id="db-stat-semana">0</div><div class="db-txt">Esta semana</div></div>
+        <div class="db-stat-card laran"><div class="db-num" id="db-stat-criticos">0</div><div class="db-txt">Alta + Críticos</div></div>
+      </div>
+      <div class="db-card">
+        <div class="db-card-title">📊 Eventos por Tipo</div>
+        <div class="db-card-sub">Ranking dos tipos de ocorrência mais registrados</div>
+        <div id="db-grafico-tipos" style="margin-top:8px"></div>
+      </div>
+      <div class="db-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+          <div class="db-card-title">🗂️ Todos os Registros</div>
+          <button class="db-btn db-btn-verde" onclick="dbExportarCSV()" style="padding:9px 16px;font-size:.81rem">📥 Exportar CSV</button>
+        </div>
+        <div id="db-conteudo-gestor"></div>
+      </div>
+    </div>
+
+  </div><!-- /db-container -->
+</div><!-- /tab-diario -->
 
 <!-- MODAL: ADD/EDIT ENTREGA -->
 <div class="modal-overlay" id="addModal">
@@ -936,6 +1213,45 @@
 </div>
 
 <div class="toast-container" id="toastContainer"></div>
+
+<!-- MODAL: DIÁRIO — PERFIL -->
+<div class="db-modal-overlay" id="db-modal-perfil">
+  <div class="db-modal">
+    <h3>👤 Selecione seu perfil</h3>
+    <p style="font-size:.83rem;color:var(--nu-gray-600);margin-bottom:16px">O perfil determina o que você pode ver e fazer no Diário de Bordo.</p>
+    <div class="db-perfil-sel">
+      <div class="db-perfil-op" onclick="dbSelecionarPerfil('analista',this)">
+        <div class="pe-icon">👩‍💼</div>
+        <p>Analista</p>
+        <p style="font-size:.71rem;color:var(--nu-gray-600);margin-top:4px;font-weight:400">Registra eventos</p>
+      </div>
+      <div class="db-perfil-op" onclick="dbSelecionarPerfil('gestor',this)">
+        <div class="pe-icon">👨‍💼</div>
+        <p>Gestor</p>
+        <p style="font-size:.71rem;color:var(--nu-gray-600);margin-top:4px;font-weight:400">Visualiza painel e relatórios</p>
+      </div>
+    </div>
+    <div class="db-field" style="margin-top:16px">
+      <label>Seu nome</label>
+      <input type="text" id="db-modal-nome" placeholder="Digite seu nome completo">
+    </div>
+    <button class="db-btn db-btn-salvar" style="margin-top:8px" onclick="dbConfirmarPerfil()">Entrar →</button>
+  </div>
+</div>
+
+<!-- MODAL: DIÁRIO — NOVA CATEGORIA -->
+<div class="db-modal-overlay" id="db-modal-nova-cat">
+  <div class="db-modal" style="max-width:360px">
+    <h3>➕ Confirmar nova categoria</h3>
+    <p style="font-size:.83rem;color:var(--nu-gray-600);margin-bottom:4px">A seguinte categoria será adicionada permanentemente:</p>
+    <div class="db-mc-preview" id="db-mc-preview">—</div>
+    <p style="font-size:.79rem;color:var(--nu-gray-600);margin-bottom:16px">Ela ficará disponível como botão junto às demais categorias.</p>
+    <div style="display:flex;gap:10px">
+      <button class="db-btn db-btn-limpar" style="flex:1;justify-content:center" onclick="dbFecharModalCat()">✕ Cancelar</button>
+      <button class="db-btn db-btn-salvar" style="flex:2" onclick="dbSalvarNovaCategoria()">✅ Confirmar e Adicionar</button>
+    </div>
+  </div>
+</div>
 
 <!-- Área de impressão — fora das abas para funcionar de qualquer aba -->
 <div class="print-report" id="printReport"></div>
@@ -2659,6 +2975,336 @@ if (currentUserId) {
   document.getElementById('currentUserSelect').value = currentUserId;
   updateCurrentUserDisplay();
 }
+
+// ===================== DIÁRIO DE BORDO =====================
+(function(){
+  // Estado local do diário
+  let dbPerfil = localStorage.getItem('db_perfil') || '';
+  let dbNome   = localStorage.getItem('db_nome')   || '';
+  let dbCatSel = '';
+  let dbAusSel = '';
+  let dbPrioSel= '';
+  let dbRegistros     = JSON.parse(localStorage.getItem('db_registros')  || '[]');
+  let dbCatsCustom    = JSON.parse(localStorage.getItem('db_cats_custom') || '[]');
+
+  // Sugestões de IA por tipo
+  const dbSugestoes = {
+    queda_ligacao:[
+      {campo:'db-descricao', texto:'Queda inesperada na linha de atendimento. Chamadas interrompidas abruptamente sem aviso prévio.'},
+      {campo:'db-impacto',   texto:'Atendimentos interrompidos. Clientes precisaram ligar novamente para continuar o atendimento.'},
+      {campo:'db-acao',      texto:'Aguardado restabelecimento automático. Acionado TI para verificação do discador.'}
+    ],
+    sem_internet:[
+      {campo:'db-descricao', texto:'Perda total ou parcial de conexão com a internet. Sistemas online inacessíveis.'},
+      {campo:'db-impacto',   texto:'Impossibilidade de acessar sistemas web, e-mail e CRM durante o período de indisponibilidade.'},
+      {campo:'db-acao',      texto:'Reiniciado o roteador local. Acionado suporte de TI via telefone.'}
+    ],
+    falta_energia:[
+      {campo:'db-descricao', texto:'Falta de energia elétrica no local de trabalho. Equipamentos desligados.'},
+      {campo:'db-impacto',   texto:'Interrupção total do trabalho. Atendimentos suspensos durante o período sem energia.'},
+      {campo:'db-acao',      texto:'Aguardado retorno da energia. Anotados os atendimentos pendentes para retomada.'}
+    ],
+    sistema_ind:[
+      {campo:'db-descricao', texto:'Sistema principal inacessível. Mensagem de erro ou tela em branco ao tentar acessar.'},
+      {campo:'db-impacto',   texto:'Impossibilidade de registrar ou consultar informações de atendimento no período.'},
+      {campo:'db-acao',      texto:'Aberto chamado no service desk. Realizado log off e log on para tentativa de solução.'}
+    ],
+    manutencao:[
+      {campo:'db-descricao', texto:'Janela de manutenção programada pela TI. Comunicado enviado previamente.'},
+      {campo:'db-impacto',   texto:'Sistema indisponível conforme planejado. Equipe informada antecipadamente.'},
+      {campo:'db-acao',      texto:'Equipe direcionada para atividades offline durante o período de manutenção.'}
+    ],
+    lentidao:[
+      {campo:'db-descricao', texto:'Sistema funcionando com lentidão acima do normal. Tempo de resposta elevado.'},
+      {campo:'db-impacto',   texto:'Aumento no tempo médio de atendimento. Clientes aguardando mais tempo por respostas.'},
+      {campo:'db-acao',      texto:'Monitorado o desempenho. Reportado ao TI para verificação de carga nos servidores.'}
+    ],
+    acesso_negado:[
+      {campo:'db-descricao', texto:'Usuários sem acesso ao sistema. Credenciais não reconhecidas ou sessão expirada.'},
+      {campo:'db-impacto',   texto:'Analistas impedidos de iniciar ou continuar atendimentos por falta de acesso.'},
+      {campo:'db-acao',      texto:'Tentativa de reset de senha. Acionado administrador do sistema para liberação de acesso.'}
+    ]
+  };
+
+  // ---- Inicialização ao abrir a aba ----
+  function dbInit() {
+    const agora = new Date();
+    document.getElementById('db-data').value        = agora.toISOString().split('T')[0];
+    document.getElementById('db-hora-inicio').value = agora.toTimeString().slice(0,5);
+    dbRestaurarCatsCustom();
+    if (dbNome) {
+      document.getElementById('db-analista').value   = dbNome;
+      document.getElementById('db-perfil-nome').textContent = dbNome + (dbPerfil==='gestor'?' 👨‍💼':' 👩‍💼');
+      document.getElementById('db-perfil-icone').textContent= dbPerfil==='gestor'?'👨‍💼':'👩‍💼';
+      if (dbPerfil==='gestor') document.getElementById('db-stab-painel').style.display='flex';
+    } else {
+      setTimeout(dbAbrirModalPerfil, 400);
+    }
+  }
+  window.dbInit = dbInit;
+
+  // ---- Sub-tabs ----
+  window.dbMudarTab = function(painel, btn) {
+    document.querySelectorAll('.db-painel').forEach(p=>p.classList.remove('ativo'));
+    document.querySelectorAll('.db-sub-tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById('db-painel-'+painel).classList.add('ativo');
+    btn.classList.add('active');
+    if (painel==='historico') dbRenderHistorico();
+    if (painel==='painel')    dbRenderPainel();
+  };
+
+  // ---- Perfil ----
+  window.dbAbrirModalPerfil = function() {
+    document.getElementById('db-modal-perfil').classList.add('aberto');
+    if (dbNome) document.getElementById('db-modal-nome').value = dbNome;
+  };
+  window.dbSelecionarPerfil = function(p, el) {
+    document.querySelectorAll('.db-perfil-op').forEach(e=>e.classList.remove('ativo'));
+    el.classList.add('ativo'); dbPerfil = p;
+  };
+  window.dbConfirmarPerfil = function() {
+    const nome = document.getElementById('db-modal-nome').value.trim();
+    if (!nome)    { toast('⚠️ Digite seu nome para continuar'); return; }
+    if (!dbPerfil){ toast('⚠️ Selecione Analista ou Gestor'); return; }
+    dbNome = nome;
+    localStorage.setItem('db_perfil', dbPerfil);
+    localStorage.setItem('db_nome', nome);
+    document.getElementById('db-analista').value = nome;
+    document.getElementById('db-perfil-nome').textContent = nome + (dbPerfil==='gestor'?' 👨‍💼':' 👩‍💼');
+    document.getElementById('db-perfil-icone').textContent= dbPerfil==='gestor'?'👨‍💼':'👩‍💼';
+    document.getElementById('db-modal-perfil').classList.remove('aberto');
+    if (dbPerfil==='gestor') document.getElementById('db-stab-painel').style.display='flex';
+    toast('Bem-vinda, '+nome+'! 👋');
+  };
+
+  // ---- Categorias ----
+  window.dbSelecionarCat = function(btn, tipo) {
+    document.querySelectorAll('.db-cat-btn').forEach(b=>b.classList.remove('ativo'));
+    btn.classList.add('ativo'); dbCatSel = tipo; dbAusSel = '';
+    document.getElementById('db-campo-outro').style.display    = tipo==='outro'    ?'block':'none';
+    document.getElementById('db-campo-ausencia').style.display = tipo==='ausencia' ?'block':'none';
+    document.querySelectorAll('.db-aus-btn').forEach(b=>b.classList.remove('ativo'));
+    if (tipo!=='outro') document.getElementById('db-nova-categoria').value='';
+    dbMostrarSugestoes(tipo);
+  };
+  window.dbSelecionarAusencia = function(btn, tipo) {
+    document.querySelectorAll('.db-aus-btn').forEach(b=>b.classList.remove('ativo'));
+    btn.classList.add('ativo'); dbAusSel = tipo;
+  };
+
+  // ---- Nova categoria ----
+  function dbRestaurarCatsCustom() {
+    const wrap = document.getElementById('db-categorias');
+    const btnOutro = document.getElementById('db-btn-outro');
+    dbCatsCustom.forEach(cat=>{
+      const btn = document.createElement('button');
+      btn.className='db-cat-btn customizada';
+      btn.dataset.tipo=cat.id;
+      btn.textContent=cat.label;
+      btn.onclick=function(){ dbSelecionarCat(this,cat.id); };
+      wrap.insertBefore(btn, btnOutro);
+    });
+  }
+  window.dbAbrirConfirmacaoCategoria = function() {
+    const nome = document.getElementById('db-nova-categoria').value.trim();
+    if (!nome){ toast('⚠️ Digite o nome da nova categoria!'); return; }
+    document.getElementById('db-mc-preview').textContent = '✨ '+nome;
+    document.getElementById('db-modal-nova-cat').classList.add('aberto');
+  };
+  window.dbFecharModalCat = function() {
+    document.getElementById('db-modal-nova-cat').classList.remove('aberto');
+  };
+  window.dbSalvarNovaCategoria = function() {
+    const nome = document.getElementById('db-nova-categoria').value.trim();
+    if (!nome){ dbFecharModalCat(); return; }
+    const id='custom_'+Date.now();
+    const label='✨ '+nome;
+    dbCatsCustom.push({id,label});
+    localStorage.setItem('db_cats_custom', JSON.stringify(dbCatsCustom));
+    const wrap=document.getElementById('db-categorias');
+    const btnOutro=document.getElementById('db-btn-outro');
+    const btn=document.createElement('button');
+    btn.className='db-cat-btn customizada ativo';
+    btn.dataset.tipo=id;
+    btn.textContent=label;
+    btn.onclick=function(){ dbSelecionarCat(this,id); };
+    wrap.insertBefore(btn, btnOutro);
+    document.querySelectorAll('.db-cat-btn').forEach(b=>b.classList.remove('ativo'));
+    btn.classList.add('ativo'); dbCatSel=id;
+    document.getElementById('db-campo-outro').style.display='none';
+    document.getElementById('db-nova-categoria').value='';
+    dbFecharModalCat();
+    toast('✅ Categoria "'+nome+'" salva e selecionada!');
+  };
+
+  // ---- Sugestões IA ----
+  function dbMostrarSugestoes(tipo) {
+    const lista=document.getElementById('db-lista-sugestoes');
+    const box=document.getElementById('db-ia-sugestoes');
+    const items=dbSugestoes[tipo];
+    if (!items){ box.style.display='none'; return; }
+    box.style.display='block';
+    const labels={['db-descricao']:'Descrição',['db-impacto']:'Impacto',['db-acao']:'Ação tomada'};
+    lista.innerHTML=items.map(s=>`
+      <div class="db-ia-item" onclick="dbUsarSugestao('${s.campo}',\`${s.texto.replace(/`/g,"'")}\`)">
+        <div><strong style="color:var(--nu-purple);font-size:.74rem">${labels[s.campo]}</strong><br>${s.texto}</div>
+        <span class="db-ia-usar">Usar →</span>
+      </div>`).join('');
+  }
+  window.dbUsarSugestao = function(campo, texto) {
+    document.getElementById(campo).value=texto;
+    toast('Sugestão aplicada! Revise antes de salvar.');
+  };
+
+  // ---- Sistemas / Prioridade ----
+  window.dbToggleSistema = function(el){ el.classList.toggle('marcado'); };
+  window.dbSelecionarPrio = function(btn){
+    document.querySelectorAll('.db-prio-btn').forEach(b=>b.classList.remove('ativo'));
+    btn.classList.add('ativo'); dbPrioSel=btn.dataset.p;
+  };
+
+  // ---- Salvar registro ----
+  window.dbSalvarRegistro = function() {
+    const analista  = document.getElementById('db-analista').value.trim();
+    const descricao = document.getElementById('db-descricao').value.trim();
+    const horaInicio= document.getElementById('db-hora-inicio').value;
+    if (!dbCatSel)  { toast('⚠️ Selecione o tipo de evento!'); return; }
+    if (dbCatSel==='ausencia'&&!dbAusSel){ toast('⚠️ Selecione o tipo de ausência!'); return; }
+    if (!descricao) { toast('⚠️ Preencha a descrição do evento!'); return; }
+    if (!analista)  { toast('⚠️ Informe o nome do analista!'); return; }
+    const tipoLabels={queda_ligacao:'📞 Queda de Ligação',sem_internet:'🌐 Sem Internet',falta_energia:'⚡ Falta de Energia',sistema_ind:'💻 Sistema Indisponível',manutencao:'🔧 Manutenção Programada',lentidao:'🐢 Lentidão',acesso_negado:'🔒 Acesso Negado',ausencia:'👤 Ausência',outro:'➕ Outro'};
+    dbCatsCustom.forEach(c=>{ tipoLabels[c.id]=c.label; });
+    const ausLabels={emergencial:'🚨 Emergencial',ausencia_previa:'📅 Ausência Prévia',banco_horas:'⏱️ Banco de Horas',projetos:'📂 Projetos',ferias:'🏖️ Férias'};
+    const sistemas=Array.from(document.querySelectorAll('.db-sistema-chk.marcado input')).map(i=>i.value).join(', ')||'—';
+    const registro={
+      id:Date.now(),
+      data:document.getElementById('db-data').value,
+      hora_inicio:horaInicio,
+      hora_fim:document.getElementById('db-hora-fim').value||'—',
+      tipo:dbCatSel, tipo_label:tipoLabels[dbCatSel]||dbCatSel,
+      ausencia_subtipo:dbCatSel==='ausencia'?dbAusSel:'',
+      ausencia_label:dbCatSel==='ausencia'?(ausLabels[dbAusSel]||''):'',
+      descricao,
+      impacto:document.getElementById('db-impacto').value.trim()||'—',
+      acao:document.getElementById('db-acao').value.trim()||'—',
+      sistemas, prioridade:dbPrioSel||'nao_definida', analista,
+      observacoes:document.getElementById('db-observacoes').value.trim()||'',
+      timestamp:new Date().toLocaleString('pt-BR')
+    };
+    dbRegistros.unshift(registro);
+    localStorage.setItem('db_registros', JSON.stringify(dbRegistros));
+    toast('✅ Registro salvo com sucesso!');
+    dbLimparFormulario();
+  };
+
+  // ---- Limpar formulário ----
+  window.dbLimparFormulario = function() {
+    const agora=new Date();
+    document.getElementById('db-hora-inicio').value=agora.toTimeString().slice(0,5);
+    document.getElementById('db-hora-fim').value='';
+    document.getElementById('db-descricao').value='';
+    document.getElementById('db-impacto').value='';
+    document.getElementById('db-acao').value='';
+    document.getElementById('db-observacoes').value='';
+    document.getElementById('db-nova-categoria').value='';
+    document.getElementById('db-campo-outro').style.display='none';
+    document.getElementById('db-campo-ausencia').style.display='none';
+    document.getElementById('db-ia-sugestoes').style.display='none';
+    document.querySelectorAll('.db-cat-btn').forEach(b=>b.classList.remove('ativo'));
+    document.querySelectorAll('.db-aus-btn').forEach(b=>b.classList.remove('ativo'));
+    document.querySelectorAll('.db-sistema-chk').forEach(b=>b.classList.remove('marcado'));
+    document.querySelectorAll('.db-prio-btn').forEach(b=>b.classList.remove('ativo'));
+    dbCatSel=''; dbAusSel=''; dbPrioSel='';
+  };
+
+  // ---- Histórico ----
+  function dbRenderHistorico() {
+    const div=document.getElementById('db-conteudo-historico');
+    if (!dbRegistros.length){ div.innerHTML='<div class="db-vazio"><div class="db-icon">📭</div><p>Nenhum registro ainda.<br>Faça seu primeiro registro na aba "Novo Registro".</p></div>'; return; }
+    const prioLabel={baixa:'🟢 Baixa',media:'🟡 Média',alta:'🟠 Alta',critica:'🔴 Crítica',nao_definida:'—'};
+    div.innerHTML=`<div class="db-hist-wrap"><table class="db-hist"><thead><tr><th>Data</th><th>Hora</th><th>Tipo</th><th>Descrição</th><th>Prioridade</th><th>Analista</th></tr></thead><tbody>${
+      dbRegistros.map(r=>`<tr>
+        <td>${r.data}</td>
+        <td>${r.hora_inicio} → ${r.hora_fim}</td>
+        <td>${r.tipo_label}${r.ausencia_label?'<br><span style="font-size:.71rem;color:#D97706;font-weight:700">'+r.ausencia_label+'</span>':''}</td>
+        <td style="max-width:210px">${r.descricao.substring(0,80)}${r.descricao.length>80?'…':''}</td>
+        <td>${prioLabel[r.prioridade]||'—'}</td>
+        <td>${r.analista}</td>
+      </tr>`).join('')
+    }</tbody></table></div>`;
+  }
+
+  // ---- Painel Gestor ----
+  function dbRenderPainel() {
+    const hoje=new Date().toISOString().split('T')[0];
+    const iniSem=new Date(); iniSem.setDate(iniSem.getDate()-7);
+    document.getElementById('db-stat-total').textContent   = dbRegistros.length;
+    document.getElementById('db-stat-hoje').textContent    = dbRegistros.filter(r=>r.data===hoje).length;
+    document.getElementById('db-stat-semana').textContent  = dbRegistros.filter(r=>new Date(r.data)>=iniSem).length;
+    document.getElementById('db-stat-criticos').textContent= dbRegistros.filter(r=>r.prioridade==='critica'||r.prioridade==='alta').length;
+    const contagem={};
+    dbRegistros.forEach(r=>{ contagem[r.tipo_label]=(contagem[r.tipo_label]||0)+1; });
+    const sorted=Object.entries(contagem).sort((a,b)=>b[1]-a[1]);
+    const maxVal=sorted[0]?.[1]||1;
+    const cores=['#8A05BE','#3B82F6','#00B894','#F39C12','#E74C3C','#C875F5','#00CEC9','#84CC16'];
+    document.getElementById('db-grafico-tipos').innerHTML=sorted.length
+      ?sorted.map(([tipo,qtd],i)=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:.81rem;font-weight:600;margin-bottom:4px"><span>${tipo}</span><span>${qtd}</span></div><div style="background:#e5e7eb;border-radius:99px;height:10px;overflow:hidden"><div style="height:100%;border-radius:99px;background:${cores[i%cores.length]};width:${(qtd/maxVal)*100}%;transition:width .5s"></div></div></div>`).join('')
+      :'<p style="color:var(--nu-gray-600);font-size:.84rem">Sem dados suficientes para exibir.</p>';
+    const prioLabel={baixa:'🟢 Baixa',media:'🟡 Média',alta:'🟠 Alta',critica:'🔴 Crítica',nao_definida:'—'};
+    const el=document.getElementById('db-conteudo-gestor');
+    if (!dbRegistros.length){ el.innerHTML='<div class="db-vazio"><div class="db-icon">📊</div><p>Nenhum registro ainda.</p></div>'; return; }
+    el.innerHTML=`<div class="db-hist-wrap"><table class="db-hist"><thead><tr><th>Data</th><th>Horário</th><th>Tipo</th><th>Descrição</th><th>Impacto</th><th>Prioridade</th><th>Analista</th></tr></thead><tbody>${
+      dbRegistros.map(r=>`<tr>
+        <td>${r.data}</td>
+        <td>${r.hora_inicio} → ${r.hora_fim}</td>
+        <td>${r.tipo_label}${r.ausencia_label?'<br><span style="font-size:.71rem;color:#D97706;font-weight:700">'+r.ausencia_label+'</span>':''}</td>
+        <td style="max-width:175px">${r.descricao.substring(0,70)}${r.descricao.length>70?'…':''}</td>
+        <td style="max-width:135px">${r.impacto.substring(0,55)}${r.impacto.length>55?'…':''}</td>
+        <td>${prioLabel[r.prioridade]||'—'}</td>
+        <td>${r.analista}</td>
+      </tr>`).join('')
+    }</tbody></table></div>`;
+  }
+
+  // ---- Exportar CSV ----
+  window.dbExportarCSV = function() {
+    if (!dbRegistros.length){ toast('Nenhum registro para exportar'); return; }
+    const header=['Data','Hora Início','Hora Fim','Tipo','Subtipo Ausência','Descrição','Impacto','Ação Tomada','Sistemas','Prioridade','Analista','Observações','Registrado em'];
+    const linhas=dbRegistros.map(r=>[
+      r.data,r.hora_inicio,r.hora_fim,r.tipo_label,r.ausencia_label||'—',
+      '"'+r.descricao.replace(/"/g,"'")+'"',
+      '"'+r.impacto.replace(/"/g,"'")+'"',
+      '"'+r.acao.replace(/"/g,"'")+'"',
+      r.sistemas,r.prioridade,r.analista,
+      '"'+(r.observacoes||'').replace(/"/g,"'")+'"',
+      r.timestamp
+    ].join(','));
+    const csv=[header.join(','),...linhas].join('\n');
+    const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download='diario-de-bordo-'+new Date().toISOString().split('T')[0]+'.csv';
+    a.click(); URL.revokeObjectURL(url);
+    toast('✅ CSV exportado com sucesso!');
+  };
+
+  // ---- Limpar histórico ----
+  window.dbLimparHistorico = function() {
+    if (!confirm('Tem certeza que deseja apagar TODOS os registros?\nEsta ação não pode ser desfeita.')) return;
+    dbRegistros=[];
+    localStorage.removeItem('db_registros');
+    dbRenderHistorico();
+    toast('Histórico limpo.');
+  };
+
+  // Inicializa quando a aba é aberta pela primeira vez
+  let dbInicializado=false;
+  const _origSwitchTab=window.switchTab;
+  window.switchTab=function(tab,btn){
+    _origSwitchTab(tab,btn);
+    if (tab==='diario'&&!dbInicializado){ dbInicializado=true; dbInit(); }
+  };
+})();
 </script>
 </body>
 </html>
