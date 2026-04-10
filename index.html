@@ -1499,7 +1499,7 @@ function renderMeetings() {
     header.innerHTML=`
       <div class="month-group-title">
         📅 ${getMonthLabel(monthKey)}
-        <span class="month-group-count">${count} reunião${count!==1?'ões':''}</span>
+        <span class="month-group-count">${count} ${count===1?'reunião':'reuniões'}</span>
       </div>
       <span class="month-group-chevron">▼</span>`;
     header.onclick=()=>group.classList.toggle('expanded');
