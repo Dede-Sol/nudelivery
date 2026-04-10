@@ -633,10 +633,9 @@
     #tab-diario .db-aus-btn:hover { border-color:#F59E0B;background:#FEF3C7; }
     #tab-diario .db-aus-btn.ativo { border-color:#F59E0B;background:#F59E0B;color:#fff; }
     #tab-diario .db-sistemas { display:flex;flex-wrap:wrap;gap:8px;margin-top:4px; }
-    #tab-diario .db-sistema-chk { display:flex;align-items:center;gap:6px;padding:7px 13px;border:1.5px solid var(--nu-gray-200);border-radius:8px;cursor:pointer;font-size:.81rem;font-weight:600;color:#444;transition:all .2s;background:#fff;font-family:inherit; }
-    #tab-diario .db-sistema-chk:hover { border-color:var(--nu-purple-mid);background:var(--nu-purple-pale); }
-    #tab-diario .db-sistema-chk input { display:none; }
-    #tab-diario .db-sistema-chk.marcado { border-color:var(--nu-blue);background:#EFF6FF;color:var(--nu-blue); }
+    #tab-diario .db-sistema-chk { display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border:2px solid var(--nu-gray-200);border-radius:8px;cursor:pointer;font-size:.81rem;font-weight:600;color:#444;transition:all .2s;background:#fff;font-family:inherit; }
+    #tab-diario .db-sistema-chk:hover { border-color:var(--nu-purple-mid);background:var(--nu-purple-pale);color:var(--nu-purple); }
+    #tab-diario .db-sistema-chk.marcado { border-color:var(--nu-blue);background:#EFF6FF;color:var(--nu-blue);box-shadow:0 2px 8px rgba(52,152,219,.2); }
     #tab-diario .db-prios { display:flex;gap:8px;margin-top:4px; }
     #tab-diario .db-prio-btn { flex:1;padding:9px;border-radius:10px;border:2px solid var(--nu-gray-200);background:#fff;font-size:.8rem;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;font-family:inherit; }
     #tab-diario .db-prio-btn:hover { transform:translateY(-1px); }
@@ -955,13 +954,13 @@
         <div class="db-field">
           <label>Sistemas afetados</label>
           <div class="db-sistemas" id="db-sistemas">
-            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="Discador"> 📞 Discador</label>
-            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="CRM"> 💼 CRM</label>
-            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="E-mail"> 📧 E-mail</label>
-            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="VPN"> 🔐 VPN</label>
-            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="Internet"> 🌐 Internet</label>
-            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="Energia"> ⚡ Energia</label>
-            <label class="db-sistema-chk" onclick="dbToggleSistema(this)"><input type="checkbox" value="Todos"> ⚠️ Todos</label>
+            <button class="db-sistema-chk" data-value="Discador"  onclick="dbToggleSistema(this)">📞 Discador</button>
+            <button class="db-sistema-chk" data-value="CRM"       onclick="dbToggleSistema(this)">💼 CRM</button>
+            <button class="db-sistema-chk" data-value="E-mail"    onclick="dbToggleSistema(this)">📧 E-mail</button>
+            <button class="db-sistema-chk" data-value="VPN"       onclick="dbToggleSistema(this)">🔐 VPN</button>
+            <button class="db-sistema-chk" data-value="Internet"  onclick="dbToggleSistema(this)">🌐 Internet</button>
+            <button class="db-sistema-chk" data-value="Energia"   onclick="dbToggleSistema(this)">⚡ Energia</button>
+            <button class="db-sistema-chk" data-value="Todos"     onclick="dbToggleSistema(this)">⚠️ Todos</button>
           </div>
         </div>
         <div class="db-field" style="margin-top:4px">
@@ -3157,7 +3156,7 @@ if (currentUserId) {
   };
 
   // ---- Sistemas / Prioridade ----
-  window.dbToggleSistema = function(el){ el.classList.toggle('marcado'); };
+  window.dbToggleSistema = function(el){ el.classList.toggle('marcado'); el.blur(); };
   window.dbSelecionarPrio = function(btn){
     document.querySelectorAll('.db-prio-btn').forEach(b=>b.classList.remove('ativo'));
     btn.classList.add('ativo'); dbPrioSel=btn.dataset.p;
@@ -3175,7 +3174,7 @@ if (currentUserId) {
     const tipoLabels={queda_ligacao:'📞 Queda de Ligação',sem_internet:'🌐 Sem Internet',falta_energia:'⚡ Falta de Energia',sistema_ind:'💻 Sistema Indisponível',manutencao:'🔧 Manutenção Programada',lentidao:'🐢 Lentidão',acesso_negado:'🔒 Acesso Negado',ausencia:'👤 Ausência',outro:'➕ Outro'};
     dbCatsCustom.forEach(c=>{ tipoLabels[c.id]=c.label; });
     const ausLabels={emergencial:'🚨 Emergencial',ausencia_previa:'📅 Ausência Prévia',banco_horas:'⏱️ Banco de Horas',projetos:'📂 Projetos',ferias:'🏖️ Férias'};
-    const sistemas=Array.from(document.querySelectorAll('.db-sistema-chk.marcado input')).map(i=>i.value).join(', ')||'—';
+    const sistemas=Array.from(document.querySelectorAll('.db-sistema-chk.marcado')).map(b=>b.dataset.value).join(', ')||'—';
     const registro={
       id:Date.now(),
       data:document.getElementById('db-data').value,
