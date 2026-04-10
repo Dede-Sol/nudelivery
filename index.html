@@ -475,6 +475,9 @@
     .feedback-flag-select:focus { outline:none;border-color:var(--nu-purple);box-shadow:0 0 0 3px rgba(138,5,190,.12); }
     .feedback-obs-textarea { width:100%;border:1.5px solid var(--nu-gray-200);border-radius:var(--radius-sm);padding:8px 10px;font-size:.83rem;font-family:inherit;resize:vertical;min-height:64px;background:#fff;color:var(--nu-text);margin-bottom:8px;line-height:1.5; }
     .feedback-obs-textarea:focus { outline:none;border-color:var(--nu-purple);box-shadow:0 0 0 3px rgba(138,5,190,.12); }
+    .obs-display { background:#faf5ff;border:1.5px solid var(--nu-purple-light);border-radius:var(--radius-sm);padding:10px 12px;font-size:.85rem;line-height:1.6;color:var(--nu-text);white-space:pre-wrap;min-height:38px; }
+    .obs-edit-block { display:flex;flex-direction:column;gap:6px; }
+    .obs-saved-block { display:flex;flex-direction:column;gap:4px; }
 
     /* RESUMO GERAL */
     .resumo-panel { border-top:1.5px solid var(--nu-gray-200); }
@@ -1658,11 +1661,34 @@ function buildRegularBody(m, secKey, canInteract, isAnalista, isCoordenador, sDa
     </div>`;
   }
 
-  return `<div class="section-obs">
-    <label>${obsTitle}</label>
-    <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Preencha as observações sobre este tópico…" ${obsDisabled?'disabled':''} onblur="saveObs('${m.id}','${secKey}')">${esc(sData.obs||'')}</textarea>
-    ${obsDisabled&&canInteract&&isCoordenador?`<p style="font-size:.73rem;color:var(--nu-gray-400);font-style:italic;margin-top:3px">Observações são preenchidas pelo analista.</p>`:''}
-  </div>
+  let obsHtml='';
+  if (obsDisabled) {
+    obsHtml=`<div class="section-obs">
+      <label>${obsTitle}</label>
+      ${sData.obs?`<div class="obs-display">${esc(sData.obs)}</div>`:`<div class="resumo-obs-empty" style="font-size:.81rem">Nenhuma observação registrada.</div>`}
+      ${isCoordenador&&canInteract?`<p style="font-size:.73rem;color:var(--nu-gray-400);font-style:italic;margin-top:3px">Observações são preenchidas pelo analista.</p>`:''}
+    </div>`;
+  } else if (sData.obs) {
+    obsHtml=`<div class="section-obs">
+      <label>${obsTitle}</label>
+      <div class="obs-saved-block" id="obs-saved-${m.id}-${secKey}">
+        <div class="obs-display">${esc(sData.obs)}</div>
+        <button class="btn btn-xs btn-outline" style="margin-top:5px" onclick="document.getElementById('obs-saved-${m.id}-${secKey}').style.display='none';document.getElementById('obs-edit-${m.id}-${secKey}').style.display='flex';document.getElementById('obs-${m.id}-${secKey}').focus()">✏️ Editar</button>
+      </div>
+      <div class="obs-edit-block" id="obs-edit-${m.id}-${secKey}" style="display:none">
+        <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Edite as observações…" oninput="document.getElementById('obs-save-btn-${m.id}-${secKey}').style.display='inline-flex'">${esc(sData.obs)}</textarea>
+        <button class="btn btn-purple btn-sm" id="obs-save-btn-${m.id}-${secKey}" onclick="saveObsBtn('${m.id}','${secKey}')">💾 Salvar</button>
+      </div>
+    </div>`;
+  } else {
+    obsHtml=`<div class="section-obs">
+      <label>${obsTitle}</label>
+      <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Preencha as observações sobre este tópico…" oninput="document.getElementById('obs-save-btn-${m.id}-${secKey}').style.display='inline-flex'"></textarea>
+      <button class="btn btn-purple btn-sm" id="obs-save-btn-${m.id}-${secKey}" style="display:none;margin-top:6px" onclick="saveObsBtn('${m.id}','${secKey}')">💾 Salvar</button>
+    </div>`;
+  }
+
+  return `${obsHtml}
   <div class="tasks-label">📌 Tarefas</div>
   ${tasksHtml}
   ${addTaskHtml}`;
@@ -1725,10 +1751,33 @@ function buildFolgasBody(m, secKey, canInteract, isAnalista, isCoordenador, sDat
     </div>`;
   }
 
-  return `<div class="section-obs">
-    <label>📝 Observações Gerais</label>
-    <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Observações gerais sobre folgas e férias…" ${(!canInteract)?'disabled':''} onblur="saveObs('${m.id}','${secKey}')">${esc(sData.obs||'')}</textarea>
-  </div>
+  let folgaObsHtml='';
+  if (!canInteract) {
+    folgaObsHtml=`<div class="section-obs">
+      <label>📝 Observações Gerais</label>
+      ${sData.obs?`<div class="obs-display">${esc(sData.obs)}</div>`:`<div class="resumo-obs-empty" style="font-size:.81rem">Nenhuma observação.</div>`}
+    </div>`;
+  } else if (sData.obs) {
+    folgaObsHtml=`<div class="section-obs">
+      <label>📝 Observações Gerais</label>
+      <div class="obs-saved-block" id="obs-saved-${m.id}-${secKey}">
+        <div class="obs-display">${esc(sData.obs)}</div>
+        <button class="btn btn-xs btn-outline" style="margin-top:5px" onclick="document.getElementById('obs-saved-${m.id}-${secKey}').style.display='none';document.getElementById('obs-edit-${m.id}-${secKey}').style.display='flex';document.getElementById('obs-${m.id}-${secKey}').focus()">✏️ Editar</button>
+      </div>
+      <div class="obs-edit-block" id="obs-edit-${m.id}-${secKey}" style="display:none">
+        <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Observações gerais sobre folgas e férias…" oninput="document.getElementById('obs-save-btn-${m.id}-${secKey}').style.display='inline-flex'">${esc(sData.obs)}</textarea>
+        <button class="btn btn-purple btn-sm" id="obs-save-btn-${m.id}-${secKey}" onclick="saveObsBtn('${m.id}','${secKey}')">💾 Salvar</button>
+      </div>
+    </div>`;
+  } else {
+    folgaObsHtml=`<div class="section-obs">
+      <label>📝 Observações Gerais</label>
+      <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Observações gerais sobre folgas e férias…" oninput="document.getElementById('obs-save-btn-${m.id}-${secKey}').style.display='inline-flex'"></textarea>
+      <button class="btn btn-purple btn-sm" id="obs-save-btn-${m.id}-${secKey}" style="display:none;margin-top:6px" onclick="saveObsBtn('${m.id}','${secKey}')">💾 Salvar</button>
+    </div>`;
+  }
+
+  return `${folgaObsHtml}
   <div class="tasks-label">📋 Solicitações</div>
   ${listHtml}
   ${addHtml}`;
@@ -1806,10 +1855,33 @@ function buildPontoBody(m, secKey, canInteract, isAnalista, isCoordenador, sData
     </div>`;
   }
 
-  return `<div class="section-obs">
-    <label>📝 Observações Gerais</label>
-    <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Observações sobre o ponto eletrônico deste período…" ${!canInteract?'disabled':''} onblur="saveObs('${m.id}','${secKey}')">${esc(sData.obs||'')}</textarea>
-  </div>
+  let pontoObsHtml='';
+  if (!canInteract) {
+    pontoObsHtml=`<div class="section-obs">
+      <label>📝 Observações Gerais</label>
+      ${sData.obs?`<div class="obs-display">${esc(sData.obs)}</div>`:`<div class="resumo-obs-empty" style="font-size:.81rem">Nenhuma observação.</div>`}
+    </div>`;
+  } else if (sData.obs) {
+    pontoObsHtml=`<div class="section-obs">
+      <label>📝 Observações Gerais</label>
+      <div class="obs-saved-block" id="obs-saved-${m.id}-${secKey}">
+        <div class="obs-display">${esc(sData.obs)}</div>
+        <button class="btn btn-xs btn-outline" style="margin-top:5px" onclick="document.getElementById('obs-saved-${m.id}-${secKey}').style.display='none';document.getElementById('obs-edit-${m.id}-${secKey}').style.display='flex';document.getElementById('obs-${m.id}-${secKey}').focus()">✏️ Editar</button>
+      </div>
+      <div class="obs-edit-block" id="obs-edit-${m.id}-${secKey}" style="display:none">
+        <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Observações sobre o ponto eletrônico deste período…" oninput="document.getElementById('obs-save-btn-${m.id}-${secKey}').style.display='inline-flex'">${esc(sData.obs)}</textarea>
+        <button class="btn btn-purple btn-sm" id="obs-save-btn-${m.id}-${secKey}" onclick="saveObsBtn('${m.id}','${secKey}')">💾 Salvar</button>
+      </div>
+    </div>`;
+  } else {
+    pontoObsHtml=`<div class="section-obs">
+      <label>📝 Observações Gerais</label>
+      <textarea class="obs-area" id="obs-${m.id}-${secKey}" placeholder="Observações sobre o ponto eletrônico deste período…" oninput="document.getElementById('obs-save-btn-${m.id}-${secKey}').style.display='inline-flex'"></textarea>
+      <button class="btn btn-purple btn-sm" id="obs-save-btn-${m.id}-${secKey}" style="display:none;margin-top:6px" onclick="saveObsBtn('${m.id}','${secKey}')">💾 Salvar</button>
+    </div>`;
+  }
+
+  return `${pontoObsHtml}
   <div class="tasks-label">📋 Ocorrências Registradas</div>
   ${summaryHtml}${listHtml}
   ${addHtml}`;
@@ -2089,13 +2161,26 @@ function toggleSectionStatus(meetingId, secKey) {
   if (!currentUserId) { toast('⚠️ Selecione seu perfil'); return; }
   const m=meetings.find(x=>x.id===meetingId); if (!m) return;
   m.sections[secKey].status=m.sections[secKey].status==='finalizado'?'pendente':'finalizado';
-  save(); reExpand(meetingId, secKey);
+  save(); reExpand(meetingId, secKey); updateMeetingStatusBadge(meetingId);
   toast(`Status de ${secKey} atualizado!`);
 }
 function saveObs(meetingId, secKey) {
   const m=meetings.find(x=>x.id===meetingId); if (!m) return;
   const val=document.getElementById(`obs-${meetingId}-${secKey}`)?.value||'';
   m.sections[secKey].obs=val; save();
+}
+function saveObsBtn(meetingId, secKey) {
+  const m=meetings.find(x=>x.id===meetingId); if (!m) return;
+  const val=document.getElementById(`obs-${meetingId}-${secKey}`)?.value||'';
+  if (!m.sections[secKey]) m.sections[secKey]={status:'pendente',obs:'',tasks:[]};
+  m.sections[secKey].obs=val;
+  save();
+  renderSections(meetingId);
+  setTimeout(()=>{
+    const secs=document.getElementById('sections-'+meetingId);
+    if (secs) { const s=secs.querySelector(`[data-sec-id="${secKey}"]`); if(s) s.classList.add('open'); }
+  },20);
+  toast('✅ Observação salva!');
 }
 function addTask(meetingId, secKey) {
   if (!currentUserId) { toast('⚠️ Selecione seu perfil'); return; }
@@ -2161,15 +2246,24 @@ function calcDays(start, end) {
   return Math.max(1,Math.round(ms/(1000*60*60*24))+1);
 }
 
-// Re-expand helper
+// Re-expand helper — re-renders only the sections container, keeping the card open
 function reExpand(meetingId, openSecKey) {
-  renderMeetings();
+  renderSections(meetingId);
   setTimeout(()=>{
-    const card=document.querySelector(`.meeting-card[data-id="${meetingId}"]`);
-    if (card) card.classList.add('expanded');
     const secs=document.getElementById('sections-'+meetingId);
     if (secs&&openSecKey) { const s=secs.querySelector(`[data-sec-id="${openSecKey}"]`); if(s) s.classList.add('open'); }
-  },50);
+  },20);
+}
+
+// Update only the meeting status badge in the card header (called after toggleSectionStatus)
+function updateMeetingStatusBadge(meetingId) {
+  const m=meetings.find(x=>x.id===meetingId); if (!m) return;
+  const allDone=SECTIONS.every(s=>m.sections[s.key]?.status==='finalizado');
+  const badge=document.querySelector(`.meeting-card[data-id="${meetingId}"] .mch-right .meeting-overall`);
+  if (badge) {
+    badge.className=`meeting-overall ${allDone?'status-finalizado':'status-pendente'}`;
+    badge.textContent=allDone?'✅ Finalizado':'⏳ Pendente';
+  }
 }
 
 // ===================== RESUMO GERAL =====================
@@ -2207,6 +2301,11 @@ function buildResumo(meetingId) {
   SECTIONS.forEach(sec=>{
     const sData=m.sections[sec.key];
     if (!sData) return;
+    // Skip sections with no recorded data
+    const hasObs     = sData.obs && sData.obs.trim();
+    const hasEntries = sData.entries && sData.entries.length > 0;
+    const hasTasks   = sData.tasks && sData.tasks.length > 0;
+    if (!hasObs && !hasEntries && !hasTasks) return;
     const isDone=sData.status==='finalizado';
 
     html+=`<div class="resumo-section">
