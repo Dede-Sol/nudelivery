@@ -286,6 +286,26 @@
     .meeting-card-body { display:none;border-top:1.5px solid var(--nu-gray-200); }
     .meeting-card.expanded .meeting-card-body { display:block; }
 
+    /* ATA DA REUNIÃO */
+    .ata-box { margin:12px 14px;background:linear-gradient(135deg,#f0f7ff,#e8f0fe);border:1.5px dashed #93c5fd;border-radius:var(--radius-sm);padding:13px 15px;transition:border-color .18s; }
+    .ata-box:hover { border-color:#3b82f6; }
+    .ata-box-header { display:flex;align-items:center;gap:8px;margin-bottom:10px; }
+    .ata-box-title { font-size:.82rem;font-weight:800;color:#1e40af;display:flex;align-items:center;gap:6px;flex:1; }
+    .ata-upload-zone { display:flex;align-items:center;gap:10px;flex-wrap:wrap; }
+    .ata-upload-label { display:inline-flex;align-items:center;gap:6px;background:#3b82f6;color:#fff;border:none;border-radius:var(--radius-sm);padding:7px 14px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;white-space:nowrap; }
+    .ata-upload-label:hover { background:#2563eb; }
+    .ata-hint { font-size:.73rem;color:#6b7280;font-style:italic; }
+    .ata-file-card { background:#fff;border:1.5px solid #bfdbfe;border-radius:var(--radius-sm);padding:10px 13px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px; }
+    .ata-file-icon { font-size:1.6rem;flex-shrink:0; }
+    .ata-file-info { flex:1;min-width:0; }
+    .ata-file-name { font-size:.83rem;font-weight:700;color:#1e3a8a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .ata-file-meta { font-size:.72rem;color:#6b7280;margin-top:2px; }
+    .ata-file-actions { display:flex;gap:6px;align-items:center;flex-shrink:0; }
+    .ata-btn-download { background:#3b82f6;color:#fff;border:none;border-radius:var(--radius-sm);padding:5px 11px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:background .15s; }
+    .ata-btn-download:hover { background:#2563eb; }
+    .ata-btn-remove { background:transparent;border:1px solid #fca5a5;color:#dc2626;border-radius:var(--radius-sm);padding:5px 9px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s; }
+    .ata-btn-remove:hover { background:#fef2f2; }
+
     /* SECTIONS */
     .section-list { display:flex;flex-direction:column; }
     .section-item { border-bottom:1.5px solid var(--nu-gray-200); }
@@ -1457,6 +1477,7 @@ function buildMeetingCard(m) {
     </div>
     <div class="meeting-card-body">
       <div class="section-list" id="sections-${m.id}"></div>
+
       <div class="resumo-panel" id="resumo-panel-${m.id}">
         <button class="resumo-toggle-btn" onclick="toggleResumo('${m.id}')">
           <span>📋 Resumo Geral da Reunião</span>
@@ -2285,6 +2306,35 @@ function buildResumo(meetingId) {
     </div>`;
   }
 
+  // ── ATA da Reunião ──────────────────────────────────────────────
+  html+=`<div class="ata-box" style="margin:10px 0 4px">
+    <div class="ata-box-header">
+      <div class="ata-box-title">📄 ATA da Reunião</div>
+    </div>
+    ${m.ata ? `
+    <div class="ata-file-card">
+      <div class="ata-file-icon">${m.ata.type==='pdf'?'📕':'📝'}</div>
+      <div class="ata-file-info">
+        <div class="ata-file-name">${esc(m.ata.name)}</div>
+        <div class="ata-file-meta">${m.ata.size} &nbsp;·&nbsp; Anexada em ${m.ata.uploadedAt}</div>
+      </div>
+      <div class="ata-file-actions">
+        ${m.ata.data ? `<a class="ata-btn-download" href="${m.ata.data}" download="${esc(m.ata.name)}">⬇️ Baixar</a>` : ''}
+        <button class="ata-btn-remove" onclick="removeAta('${meetingId}')">✕ Remover</button>
+      </div>
+    </div>` : ''}
+    <div class="ata-upload-zone" style="margin-top:${m.ata ? '8px' : '0'}">
+      <label for="ata-input-${meetingId}" class="ata-upload-label"
+             style="${m.ata ? 'background:#6B7280' : ''}">
+        📎 ${m.ata ? 'Substituir ATA' : 'Anexar ATA'}
+      </label>
+      <span class="ata-hint">Aceita .docx ou .pdf &nbsp;·&nbsp; máx. 5 MB</span>
+    </div>
+    <input type="file" id="ata-input-${meetingId}"
+           accept=".docx,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+           style="display:none" onchange="uploadAta('${meetingId}',this)">
+  </div>`;
+
   html+=`<div class="resumo-actions">
     <button class="btn btn-outline btn-sm" onclick="toggleResumo('${meetingId}')">Fechar</button>
     <button class="btn btn-purple btn-sm" onclick="printResumo('${meetingId}')">🖨️ Imprimir Resumo</button>
@@ -2445,6 +2495,61 @@ function resetAllData() {
   document.getElementById('currentUserSelect').value = '';
   updateCurrentUserDisplay();
   toast('🗑️ Todos os dados foram apagados.');
+}
+
+// ===================== ATA DA REUNIÃO =====================
+function formatFileSize(bytes) {
+  if (bytes < 1024)        return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function uploadAta(meetingId, input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['pdf', 'docx'].includes(ext)) {
+    toast('⚠️ Use apenas arquivos .pdf ou .docx'); input.value = ''; return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    toast('⚠️ Arquivo muito grande. Máximo 5 MB.'); input.value = ''; return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const m = meetings.find(x => x.id === meetingId);
+    if (!m) return;
+    m.ata = {
+      name:       file.name,
+      size:       formatFileSize(file.size),
+      type:       ext,
+      data:       e.target.result,   // data URL base64
+      uploadedAt: new Date().toLocaleDateString('pt-BR'),
+    };
+    try {
+      save();
+    } catch (err) {
+      m.ata.data = '';
+      m.ata.tooBig = true;
+      save();
+      toast('⚠️ Arquivo muito grande para o armazenamento local. Tente um arquivo menor.');
+      return;
+    }
+    buildResumo(meetingId);   // atualiza só o painel do Resumo
+    toast('📄 ATA salva com sucesso!');
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeAta(meetingId) {
+  if (!confirm('Deseja remover a ATA desta reunião?')) return;
+  const m = meetings.find(x => x.id === meetingId);
+  if (!m) return;
+  delete m.ata;
+  save();
+  buildResumo(meetingId);   // atualiza só o painel do Resumo
+  toast('🗑️ ATA removida.');
 }
 
 // ===================== INIT =====================
