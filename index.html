@@ -395,6 +395,67 @@
     .ponto-obs-input { width:100%;border:1.5px solid var(--nu-gray-200);border-radius:6px;padding:6px 8px;font-size:.8rem;font-family:inherit;color:var(--nu-text);margin-bottom:8px; }
     .ponto-obs-input:focus { outline:none;border-color:#6366f1; }
 
+    /* MONTH GROUPS */
+    .month-group { background:#fff;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);border:1.5px solid var(--nu-purple-light);overflow:hidden; }
+    .month-group-header { display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;background:linear-gradient(135deg,var(--nu-purple-pale),#fff);gap:10px;user-select:none;transition:background .15s; }
+    .month-group-header:hover { background:var(--nu-purple-light); }
+    .month-group-title { font-weight:800;font-size:1rem;color:var(--nu-purple-dark);display:flex;align-items:center;gap:8px; }
+    .month-group-count { background:var(--nu-purple-light);color:var(--nu-purple-dark);font-size:.73rem;font-weight:700;padding:2px 10px;border-radius:20px; }
+    .month-group-chevron { font-size:.8rem;color:var(--nu-purple-mid);transition:transform .2s;flex-shrink:0; }
+    .month-group.expanded .month-group-chevron { transform:rotate(180deg); }
+    .month-group-body { display:none;padding:12px 12px 0; }
+    .month-group.expanded .month-group-body { display:flex;flex-direction:column;gap:10px; }
+    .month-meetings-list { display:flex;flex-direction:column;gap:10px; }
+
+    /* ICP MENSAL */
+    .icp-mensal-box { background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1.5px solid var(--nu-purple-light);border-radius:var(--radius-sm);padding:11px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0 12px; }
+    .icp-mensal-label { font-size:.79rem;font-weight:800;color:var(--nu-purple-dark);display:flex;align-items:center;gap:5px;flex:1;white-space:nowrap; }
+    .icp-mensal-input { border:1.5px solid var(--nu-purple-mid);border-radius:var(--radius-sm);padding:6px 10px;font-size:.95rem;font-weight:700;font-family:inherit;color:var(--nu-purple-deep);background:#fff;width:110px;text-align:center; }
+    .icp-mensal-input:focus { outline:none;border-color:var(--nu-purple);box-shadow:0 0 0 3px rgba(138,5,190,.12); }
+    .icp-save-btn { background:var(--nu-purple);color:#fff;border:none;border-radius:var(--radius-sm);padding:6px 13px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s; }
+    .icp-save-btn:hover { background:var(--nu-purple-dark); }
+    .icp-saved-chip { font-size:.72rem;font-weight:700;color:var(--nu-green);display:none;align-items:center;gap:3px;padding:4px 9px;background:#e6f9f4;border-radius:20px;border:1px solid #86efac; }
+
+    /* ICP MODAL */
+    .icp-modal { max-width:620px; }
+    .icp-manual-form { background:var(--nu-purple-pale);border:1.5px solid var(--nu-purple-light);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:16px;display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap; }
+    .icp-form-group { display:flex;flex-direction:column;gap:5px;flex:1;min-width:130px; }
+    .icp-form-label { font-size:.76rem;font-weight:800;color:var(--nu-purple-dark); }
+    .icp-form-input { border:1.5px solid var(--nu-purple-mid);border-radius:var(--radius-sm);padding:8px 10px;font-size:.9rem;font-weight:700;font-family:inherit;color:var(--nu-purple-deep);background:#fff; }
+    .icp-form-input:focus { outline:none;border-color:var(--nu-purple);box-shadow:0 0 0 3px rgba(138,5,190,.12); }
+    .icp-table { width:100%;border-collapse:collapse;font-size:.84rem;margin-top:4px; }
+    .icp-table th { background:var(--nu-purple-light);color:var(--nu-purple-dark);font-weight:800;padding:9px 14px;text-align:left; }
+    .icp-table th:last-child { text-align:right; }
+    .icp-table td { padding:9px 14px;border-bottom:1px solid var(--nu-gray-200);vertical-align:middle; }
+    .icp-table tr:last-child td { border-bottom:none; }
+    .icp-table tr:hover td { background:#faf5ff; }
+    .icp-value-pill { font-size:1rem;font-weight:900;color:var(--nu-purple);background:var(--nu-purple-pale);padding:3px 12px;border-radius:20px;border:1.5px solid var(--nu-purple-light);display:inline-block; }
+    .icp-del-btn { background:transparent;border:none;cursor:pointer;color:var(--nu-gray-400);font-size:.78rem;padding:3px 8px;border-radius:4px;transition:all .15s;float:right; }
+    .icp-del-btn:hover { background:#FDECEA;color:var(--nu-red); }
+    .icp-empty-state { text-align:center;padding:36px 24px;color:var(--nu-gray-400); }
+    .icp-empty-state .ie-icon { font-size:2.8rem;margin-bottom:9px; }
+    .icp-empty-state p { font-size:.85rem;font-weight:600; }
+
+    /* FEEDBACKS SECTION */
+    .feedback-list { display:flex;flex-direction:column;gap:7px;margin-bottom:10px; }
+    .feedback-item { background:#fff;border:1.5px solid var(--nu-gray-200);border-radius:var(--radius-sm);padding:10px 12px;transition:border-color .15s; }
+    .feedback-item.atencao { border-left:4px solid var(--nu-amber); }
+    .feedback-item.destaque { border-left:4px solid var(--nu-green); }
+    .feedback-item:hover { box-shadow:var(--shadow-sm); }
+    .feedback-row1 { display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap; }
+    .feedback-flag-chip { font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:4px; }
+    .flag-atencao { background:#FEF5E7;color:#8C6200;border:1px solid #F0C070; }
+    .flag-destaque { background:#E6F9F4;color:#005C42;border:1px solid #86efac; }
+    .feedback-obs-text { font-size:.83rem;color:var(--nu-text);margin-top:4px;line-height:1.5; }
+    .feedback-del-btn { background:transparent;border:none;cursor:pointer;color:var(--nu-gray-400);font-size:.78rem;padding:2px 4px;border-radius:4px;margin-left:auto;transition:all .15s;flex-shrink:0; }
+    .feedback-del-btn:hover { background:#FDECEA;color:var(--nu-red); }
+    .add-feedback-form { background:#fff;border:1.5px dashed var(--nu-purple-light);border-radius:var(--radius-sm);padding:12px 13px;margin-top:8px; }
+    .add-feedback-form label { font-size:.76rem;font-weight:700;color:var(--nu-gray-600);display:block;margin-bottom:5px; }
+    .feedback-flag-select { border:1.5px solid var(--nu-gray-200);border-radius:6px;padding:6px 9px;font-size:.82rem;font-family:inherit;color:var(--nu-text);width:100%;margin-bottom:8px; }
+    .feedback-flag-select:focus { outline:none;border-color:var(--nu-purple);box-shadow:0 0 0 3px rgba(138,5,190,.12); }
+    .feedback-obs-textarea { width:100%;border:1.5px solid var(--nu-gray-200);border-radius:var(--radius-sm);padding:8px 10px;font-size:.83rem;font-family:inherit;resize:vertical;min-height:64px;background:#fff;color:var(--nu-text);margin-bottom:8px;line-height:1.5; }
+    .feedback-obs-textarea:focus { outline:none;border-color:var(--nu-purple);box-shadow:0 0 0 3px rgba(138,5,190,.12); }
+
     /* RESUMO GERAL */
     .resumo-panel { border-top:1.5px solid var(--nu-gray-200); }
     .resumo-toggle-btn { width:100%;background:linear-gradient(135deg,var(--nu-purple-pale),#fff);border:none;cursor:pointer;padding:12px 16px;font-size:.85rem;font-weight:700;color:var(--nu-purple-dark);display:flex;align-items:center;gap:8px;justify-content:space-between;font-family:inherit;transition:background .15s; }
@@ -521,7 +582,8 @@
     </div>
     <div class="header-stats" id="headerStats"></div>
     <div class="header-actions">
-      <button class="btn btn-ghost" onclick="openReportModal()">📊 Relatório PDF</button>
+      <button class="btn btn-ghost" onclick="openICPModal()">📊 ICP Mensal</button>
+      <button class="btn btn-ghost" onclick="openReportModal()">📋 Relatório PDF</button>
       <button class="btn btn-ghost" onclick="exportData()" title="Exportar todos os dados como arquivo .json">💾 Exportar</button>
       <label class="btn btn-ghost" title="Importar dados de um arquivo .json exportado anteriormente" style="cursor:pointer;margin:0">
         📂 Importar
@@ -648,7 +710,7 @@
       <div class="meetings-area">
         <div style="background:#fff;border:1.5px solid var(--nu-purple-light);border-left:4px solid var(--nu-purple);border-radius:var(--radius-sm);padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:.84rem;">
           <span style="font-size:1.1rem">📈</span>
-          <span style="color:var(--nu-gray-600)">Para acessar o Painel Individual de Produtividade <a href="https://us-east-1.quicksight.aws.amazon.com/sn/account/nu-qs-prod/accounts/182399701629/dashboards/3ede9634-60c5-4f04-bb1d-cb8bf7275dfe?state=QUFBQURtdGxlUzB4TlRZNE9UVTFNekEzMU5EMUtmdzZIZWFCWVhzV1JNMC1Dbml0bFczY0laR2E5NkM2a0pCQ2dwVVV4a2NxZmpfYVpjaFNzSmwxcTJLc01RTTVNOW04alA0ZWFUX0NUZEdmS2NLTGJfZG13Y3BITkREYXlRaU1hU1FaNmROZ1pCVVl1RDNXdHVBNWQyUmJfSHZ5eUZQVVdrem1LQWx4bUdiVTFpVl82T3NkS1EyOWR5OWVCbndLVG9LT2xnNGhZSXZPOWc3ZE9SSTB1cVFqQU5BTFUxWl9TbFlUeG5nbld3Z0h5aWZsbkYwakI1TUNDVmh1" target="_blank" rel="noopener" style="color:var(--nu-purple);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--nu-purple-mid)">clique aqui</a>.</span>
+          <span style="color:var(--nu-gray-600)">Para acessar o Painel Individual de Produtividade <a href="https://us-east-1.quicksight.aws.amazon.com/sn/account/nu-qs-prod/dashboards/3ede9634-60c5-4f04-bb1d-cb8bf7275dfe/sheets/3ede9634-60c5-4f04-bb1d-cb8bf7275dfe_84bd8970-9c63-4e63-a2e5-5ec641ec69da" target="_blank" rel="noopener" style="color:var(--nu-purple);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--nu-purple-mid)">clique aqui</a>.</span>
         </div>
         <div class="meetings-topbar" style="margin-top:14px">
           <h2>🤝 Reuniões 1:1</h2>
@@ -800,6 +862,24 @@
   </div>
 </div>
 
+<!-- MODAL: ICP MENSAL -->
+<div class="modal-overlay" id="icpModal">
+  <div class="modal icp-modal">
+    <div class="modal-header">
+      <div>
+        <h2>📊 ICP Mensal</h2>
+        <p>Registre e exporte os resultados mensais de ICP</p>
+      </div>
+      <button class="modal-close" onclick="closeICPModal()">✕</button>
+    </div>
+    <div class="modal-body" id="icpModalBody"></div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" onclick="closeICPModal()">Fechar</button>
+      <button type="button" class="btn btn-purple" onclick="printICPReport()">🖨️ Gerar PDF de ICP</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: NOVA REUNIÃO -->
 <div class="modal-overlay" id="newMeetingModal">
   <div class="modal" style="max-width:520px">
@@ -842,6 +922,7 @@
 let deliveries   = JSON.parse(localStorage.getItem('nudelivery_data')     || '[]');
 let users        = JSON.parse(localStorage.getItem('nudelivery_users')    || '[]');
 let meetings     = JSON.parse(localStorage.getItem('nudelivery_meetings') || '[]');
+let icpData      = JSON.parse(localStorage.getItem('nudelivery_icp')      || '{}');
 let currentUserId = localStorage.getItem('nudelivery_current_user') || '';
 let dragId = null;
 
@@ -881,9 +962,14 @@ const SECTIONS = [
   { key:'produtividade',   label:'Produtividade',   icon:'⚡' },
   { key:'qualidade',       label:'Qualidade',       icon:'🎯' },
   { key:'desenvolvimento', label:'Desenvolvimento', icon:'🌱' },
+  { key:'feedbacks',       label:'Feedbacks',       icon:'💬', feedbackSection:true },
   { key:'folgas',          label:'Folgas & Férias',  icon:'🏖️', special:true },
   { key:'ponto',           label:'Ponto Eletrônico', icon:'🕐', special:true, pontoSection:true }
 ];
+
+const PT_MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+function getMonthKey(dateStr) { const p=dateStr.split('-'); return `${p[0]}-${p[1]}`; }
+function getMonthLabel(key) { const p=key.split('-'); return `${PT_MONTHS[parseInt(p[1])-1]} ${p[0]}`; }
 
 const PONTO_TYPES = {
   atraso:           { label:'Atraso',             emoji:'⏰' },
@@ -903,6 +989,7 @@ function save() {
   localStorage.setItem('nudelivery_data',     JSON.stringify(deliveries));
   localStorage.setItem('nudelivery_users',    JSON.stringify(users));
   localStorage.setItem('nudelivery_meetings', JSON.stringify(meetings));
+  localStorage.setItem('nudelivery_icp',      JSON.stringify(icpData));
   localStorage.setItem('nudelivery_current_user', currentUserId);
 }
 
@@ -1335,8 +1422,8 @@ function createMeeting() {
   if (coordenadorId===analistaId) { toast('⚠️ Coordenador e analista devem ser pessoas diferentes'); return; }
   const meeting={id:uid(), date, coordenadorId, analistaId, sections:{}};
   SECTIONS.forEach(s=>{
-    if (s.special) meeting.sections[s.key]={status:'pendente', obs:'', entries:[]};
-    else           meeting.sections[s.key]={status:'pendente', obs:'', tasks:[]};
+    if (s.special || s.feedbackSection) meeting.sections[s.key]={status:'pendente', obs:'', entries:[]};
+    else                               meeting.sections[s.key]={status:'pendente', obs:'', tasks:[]};
   });
   meetings.unshift(meeting); save(); renderMeetings(); closeNewMeetingModal();
   toast(`📅 Reunião de ${fmtDate(date)} criada!`);
@@ -1346,6 +1433,41 @@ function deleteMeeting(id) {
   meetings=meetings.filter(m=>m.id!==id); save(); renderMeetings(); toast('🗑️ Reunião removida.');
 }
 
+function buildMeetingCard(m) {
+  const coordenador=users.find(u=>u.id===m.coordenadorId);
+  const analista=users.find(u=>u.id===m.analistaId);
+  const allDone=SECTIONS.every(s=>m.sections[s.key]?.status==='finalizado');
+  const overallStatus=allDone?'finalizado':'pendente';
+  const card=document.createElement('div');
+  card.className='meeting-card'; card.dataset.id=m.id;
+  card.innerHTML=`
+    <div class="meeting-card-header" onclick="toggleMeeting('${m.id}')">
+      <div class="mch-left">
+        <span class="mch-date">📅 ${fmtDate(m.date)}</span>
+        <div class="mch-participants">
+          ${coordenador?`<span class="mch-pill">🎯 ${esc(coordenador.name)}</span>`:''}
+          ${analista?`<span class="mch-pill">💼 ${esc(analista.name)}</span>`:''}
+        </div>
+      </div>
+      <div class="mch-right">
+        <span class="meeting-overall ${overallStatus==='finalizado'?'status-finalizado':'status-pendente'}">${overallStatus==='finalizado'?'✅ Finalizado':'⏳ Pendente'}</span>
+        <button class="card-btn del" onclick="event.stopPropagation();deleteMeeting('${m.id}')">🗑️</button>
+        <span class="meeting-chevron">▼</span>
+      </div>
+    </div>
+    <div class="meeting-card-body">
+      <div class="section-list" id="sections-${m.id}"></div>
+      <div class="resumo-panel" id="resumo-panel-${m.id}">
+        <button class="resumo-toggle-btn" onclick="toggleResumo('${m.id}')">
+          <span>📋 Resumo Geral da Reunião</span>
+          <span id="resumo-chevron-${m.id}" style="font-size:.75rem;color:var(--nu-gray-400);transition:transform .2s">▼</span>
+        </button>
+        <div class="resumo-body" id="resumo-body-${m.id}"></div>
+      </div>
+    </div>`;
+  return card;
+}
+
 function renderMeetings() {
   const container=document.getElementById('meetingCards');
   container.innerHTML='';
@@ -1353,40 +1475,65 @@ function renderMeetings() {
     container.innerHTML=`<div class="no-meeting-state"><div class="nm-icon">🤝</div><h3>Nenhuma reunião registrada</h3><p>Crie sua primeira reunião 1:1.</p><button class="btn btn-purple" onclick="openNewMeetingModal()">+ Criar Reunião</button></div>`;
     return;
   }
-  meetings.forEach(m=>{
-    const coordenador=users.find(u=>u.id===m.coordenadorId);
-    const analista=users.find(u=>u.id===m.analistaId);
-    const allDone=SECTIONS.every(s=>m.sections[s.key]?.status==='finalizado');
-    const overallStatus=allDone?'finalizado':'pendente';
-    const card=document.createElement('div');
-    card.className='meeting-card'; card.dataset.id=m.id;
-    card.innerHTML=`
-      <div class="meeting-card-header" onclick="toggleMeeting('${m.id}')">
-        <div class="mch-left">
-          <span class="mch-date">📅 ${fmtDate(m.date)}</span>
-          <div class="mch-participants">
-            ${coordenador?`<span class="mch-pill">🎯 ${esc(coordenador.name)}</span>`:''}
-            ${analista?`<span class="mch-pill">💼 ${esc(analista.name)}</span>`:''}
-          </div>
-        </div>
-        <div class="mch-right">
-          <span class="meeting-overall ${overallStatus==='finalizado'?'status-finalizado':'status-pendente'}">${overallStatus==='finalizado'?'✅ Finalizado':'⏳ Pendente'}</span>
-          <button class="card-btn del" onclick="event.stopPropagation();deleteMeeting('${m.id}')">🗑️</button>
-          <span class="meeting-chevron">▼</span>
-        </div>
+
+  // Agrupar por mês (YYYY-MM), ordenar do mais recente para o mais antigo
+  const groups={};
+  [...meetings].sort((a,b)=>a.date.localeCompare(b.date)).forEach(m=>{
+    const key=getMonthKey(m.date);
+    if (!groups[key]) groups[key]=[];
+    groups[key].push(m);
+  });
+  const sortedKeys=Object.keys(groups).sort((a,b)=>b.localeCompare(a));
+
+  sortedKeys.forEach(monthKey=>{
+    const monthMeetings=groups[monthKey];
+    const count=monthMeetings.length;
+    const icpVal=icpData[monthKey]||'';
+
+    const group=document.createElement('div');
+    group.className='month-group'; group.dataset.monthKey=monthKey;
+
+    // Header do mês
+    const header=document.createElement('div');
+    header.className='month-group-header';
+    header.innerHTML=`
+      <div class="month-group-title">
+        📅 ${getMonthLabel(monthKey)}
+        <span class="month-group-count">${count} reunião${count!==1?'ões':''}</span>
       </div>
-      <div class="meeting-card-body">
-        <div class="section-list" id="sections-${m.id}"></div>
-        <div class="resumo-panel" id="resumo-panel-${m.id}">
-          <button class="resumo-toggle-btn" onclick="toggleResumo('${m.id}')">
-            <span>📋 Resumo Geral da Reunião</span>
-            <span id="resumo-chevron-${m.id}" style="font-size:.75rem;color:var(--nu-gray-400);transition:transform .2s">▼</span>
-          </button>
-          <div class="resumo-body" id="resumo-body-${m.id}"></div>
-        </div>
-      </div>`;
-    container.appendChild(card);
-    renderSections(m.id);
+      <span class="month-group-chevron">▼</span>`;
+    header.onclick=()=>group.classList.toggle('expanded');
+
+    // Body do mês
+    const body=document.createElement('div');
+    body.className='month-group-body';
+
+    // Lista de reuniões do mês (cronológica: mais antiga → mais recente)
+    const meetingsList=document.createElement('div');
+    meetingsList.className='month-meetings-list';
+    [...monthMeetings].reverse().forEach(m=>{
+      const card=buildMeetingCard(m);
+      meetingsList.appendChild(card);
+    });
+    body.appendChild(meetingsList);
+
+    // ICP Mensal
+    const icpBox=document.createElement('div');
+    icpBox.className='icp-mensal-box';
+    icpBox.innerHTML=`
+      <span class="icp-mensal-label">📊 ICP Mensal <span style="font-size:.7rem;font-weight:400;color:var(--nu-gray-600)">(resultado atingido no mês)</span></span>
+      <input type="number" class="icp-mensal-input" id="icp-${monthKey}" placeholder="Ex: 85" value="${esc(String(icpVal))}"
+             onblur="saveICP('${monthKey}')" onkeydown="if(event.key==='Enter'){this.blur()}" />
+      <button class="icp-save-btn" onclick="saveICP('${monthKey}')">💾 Salvar ICP</button>
+      <span class="icp-saved-chip" id="icp-saved-${monthKey}">✅ Salvo!</span>`;
+    body.appendChild(icpBox);
+
+    group.appendChild(header);
+    group.appendChild(body);
+    container.appendChild(group);
+
+    // Renderizar seções de cada reunião do mês
+    [...monthMeetings].reverse().forEach(m=>renderSections(m.id));
   });
 }
 
@@ -1407,9 +1554,8 @@ function renderSections(meetingId) {
 
   SECTIONS.forEach(sec=>{
     let defaultData;
-    if (sec.pontoSection)  defaultData = {status:'pendente',obs:'',entries:[]};
-    else if (sec.special)  defaultData = {status:'pendente',obs:'',entries:[]};
-    else                   defaultData = {status:'pendente',obs:'',tasks:[]};
+    if (sec.pontoSection || sec.special || sec.feedbackSection) defaultData = {status:'pendente',obs:'',entries:[]};
+    else                                                        defaultData = {status:'pendente',obs:'',tasks:[]};
     const sData = m.sections[sec.key] || defaultData;
     const isDone=sData.status==='finalizado';
     const item=document.createElement('div');
@@ -1421,6 +1567,8 @@ function renderSections(meetingId) {
     let bodyContent='';
     if (sec.pontoSection) {
       bodyContent = buildPontoBody(m, sec.key, canInteract, isAnalista, isCoordenador, sData);
+    } else if (sec.feedbackSection) {
+      bodyContent = buildFeedbackBody(m, sec.key, canInteract, isAnalista, isCoordenador, sData);
     } else if (sec.special) {
       bodyContent = buildFolgasBody(m, sec.key, canInteract, isAnalista, isCoordenador, sData);
     } else {
@@ -1687,6 +1835,235 @@ function deletePonto(meetingId, secKey, entryId) {
   save(); reExpand(meetingId, secKey); toast('🗑️ Ocorrência removida.');
 }
 
+// ===================== FEEDBACKS =====================
+function buildFeedbackBody(m, secKey, canInteract, isAnalista, isCoordenador, sData) {
+  const entries = sData.entries || [];
+
+  let listHtml = '';
+  if (!entries.length) {
+    listHtml = `<div class="no-tasks">Nenhum feedback registrado.${canInteract?' Adicione abaixo.':''}</div>`;
+  } else {
+    listHtml = '<div class="feedback-list">';
+    entries.forEach(e => {
+      const flagLabel = e.flag === 'destaque' ? '⭐ Merece destaque' : '⚠️ Ponto de atenção';
+      const flagCls   = e.flag === 'destaque' ? 'flag-destaque' : 'flag-atencao';
+      const itemCls   = e.flag === 'destaque' ? 'destaque' : 'atencao';
+      listHtml += `<div class="feedback-item ${itemCls}">
+        <div class="feedback-row1">
+          <span class="feedback-flag-chip ${flagCls}">${flagLabel}</span>
+          ${canInteract?`<button class="feedback-del-btn" onclick="deleteFeedback('${m.id}','${secKey}','${e.id}')" title="Remover">✕</button>`:''}
+        </div>
+        ${e.obs?`<div class="feedback-obs-text">${esc(e.obs)}</div>`:''}
+      </div>`;
+    });
+    listHtml += '</div>';
+  }
+
+  let addHtml = '';
+  if (canInteract) {
+    addHtml = `<div class="add-feedback-form">
+      <label>🏷️ Tipo do Feedback</label>
+      <select class="feedback-flag-select" id="feedbackFlag-${m.id}">
+        <option value="atencao">⚠️ Ponto de atenção</option>
+        <option value="destaque">⭐ Merece destaque</option>
+      </select>
+      <label>📝 Observações</label>
+      <textarea class="feedback-obs-textarea" id="feedbackObs-${m.id}" placeholder="Descreva o feedback com detalhes…"></textarea>
+      <button class="btn btn-purple btn-sm" onclick="addFeedback('${m.id}','${secKey}')">+ Registrar Feedback</button>
+    </div>`;
+  }
+
+  return `<div class="tasks-label">💬 Feedbacks Registrados</div>
+  ${listHtml}
+  ${addHtml}`;
+}
+
+function addFeedback(meetingId, secKey) {
+  if (!currentUserId) { toast('⚠️ Selecione seu perfil'); return; }
+  const flagEl = document.getElementById('feedbackFlag-' + meetingId);
+  const obsEl  = document.getElementById('feedbackObs-'  + meetingId);
+  if (!flagEl) { toast('⚠️ Formulário não encontrado. Reabra a seção.'); return; }
+  const obs  = obsEl ? obsEl.value.trim() : '';
+  if (!obs) { toast('⚠️ Preencha as observações do feedback'); return; }
+  const m = meetings.find(x=>x.id===meetingId); if (!m) return;
+  if (!m.sections[secKey]) m.sections[secKey] = {status:'pendente', obs:'', entries:[]};
+  if (!m.sections[secKey].entries) m.sections[secKey].entries = [];
+  m.sections[secKey].entries.push({
+    id: uid(),
+    flag: flagEl.value,
+    obs,
+    createdBy: currentUserId
+  });
+  save(); reExpand(meetingId, secKey);
+  toast(flagEl.value === 'destaque' ? '⭐ Feedback "Merece destaque" registrado!' : '⚠️ Feedback "Ponto de atenção" registrado!');
+}
+
+function deleteFeedback(meetingId, secKey, entryId) {
+  const m = meetings.find(x=>x.id===meetingId); if (!m) return;
+  m.sections[secKey].entries = (m.sections[secKey].entries||[]).filter(e=>e.id!==entryId);
+  save(); reExpand(meetingId, secKey); toast('🗑️ Feedback removido.');
+}
+
+// ===================== ICP MENSAL =====================
+function saveICP(monthKey) {
+  const input = document.getElementById('icp-' + monthKey);
+  if (!input) return;
+  const val = input.value.trim();
+  if (val !== '') {
+    icpData[monthKey] = parseFloat(val);
+  } else {
+    delete icpData[monthKey];
+  }
+  save();
+  const chip = document.getElementById('icp-saved-' + monthKey);
+  if (chip) {
+    chip.style.display = 'inline-flex';
+    setTimeout(() => { chip.style.display = 'none'; }, 2000);
+  }
+  toast(`📊 ICP de ${getMonthLabel(monthKey)} salvo: ${val || '—'}`);
+}
+
+// ===================== ICP MODAL =====================
+function openICPModal() {
+  renderICPModal();
+  document.getElementById('icpModal').classList.add('open');
+}
+function closeICPModal() {
+  document.getElementById('icpModal').classList.remove('open');
+}
+
+function renderICPModal() {
+  const sorted = Object.entries(icpData).sort((a,b) => b[0].localeCompare(a[0]));
+  const currMonth = today().slice(0,7);
+  let html = `
+    <div class="icp-manual-form">
+      <div class="icp-form-group">
+        <label class="icp-form-label">📅 Mês de Referência</label>
+        <input type="month" id="icpManualMonth" class="icp-form-input" value="${currMonth}" />
+      </div>
+      <div class="icp-form-group">
+        <label class="icp-form-label">📊 Resultado ICP (%)</label>
+        <input type="text" id="icpManualValue" class="icp-form-input" placeholder="Ex: 87.5"
+               onkeydown="if(event.key==='Enter') saveICPManual()" />
+      </div>
+      <button class="btn btn-purple" onclick="saveICPManual()" style="flex-shrink:0">💾 Salvar</button>
+    </div>`;
+
+  if (sorted.length === 0) {
+    html += `<div class="icp-empty-state">
+      <div class="ie-icon">📊</div>
+      <p>Nenhum ICP registrado ainda.<br>Use o formulário acima para adicionar o primeiro.</p>
+    </div>`;
+  } else {
+    html += `<table class="icp-table">
+      <thead><tr>
+        <th>📅 Mês</th>
+        <th style="text-align:right">📊 ICP (%)</th>
+        <th></th>
+      </tr></thead><tbody>`;
+    sorted.forEach(([key, val]) => {
+      const numVal = parseFloat(val);
+      let barColor = numVal >= 90 ? '#00B894' : numVal >= 70 ? '#F39C12' : '#E74C3C';
+      html += `<tr>
+        <td style="font-weight:700;color:var(--nu-purple-dark)">${getMonthLabel(key)}</td>
+        <td style="text-align:right">
+          <span class="icp-value-pill">${val}%</span>
+        </td>
+        <td style="text-align:right;width:90px">
+          <button class="icp-del-btn" onclick="deleteICPEntry('${key}')" title="Remover">🗑️ Remover</button>
+        </td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+  document.getElementById('icpModalBody').innerHTML = html;
+}
+
+function saveICPManual() {
+  const monthEl = document.getElementById('icpManualMonth');
+  const valEl   = document.getElementById('icpManualValue');
+  if (!monthEl || !valEl) return;
+  const month = monthEl.value;
+  const raw   = valEl.value.trim().replace('%','');
+  if (!month) { toast('⚠️ Selecione o mês'); return; }
+  if (raw === '' || isNaN(parseFloat(raw))) { toast('⚠️ Informe um valor numérico válido'); return; }
+  icpData[month] = parseFloat(raw);
+  save();
+  valEl.value = '';
+  renderICPModal();
+  // Sincroniza o input da aba 1:1 se existir
+  const syncInput = document.getElementById('icp-' + month);
+  if (syncInput) syncInput.value = parseFloat(raw);
+  toast(`✅ ICP de ${getMonthLabel(month)} salvo: ${raw}%`);
+}
+
+function deleteICPEntry(monthKey) {
+  if (!confirm(`Remover ICP de ${getMonthLabel(monthKey)}?`)) return;
+  delete icpData[monthKey];
+  save();
+  renderICPModal();
+  toast('🗑️ ICP removido.');
+}
+
+function printICPReport() {
+  const dateStr = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  const sorted  = Object.entries(icpData).sort((a,b) => b[0].localeCompare(a[0]));
+  let rows = '';
+  if (sorted.length === 0) {
+    rows = `<tr><td colspan="2" style="text-align:center;color:#9ca3af;font-style:italic;padding:24px">Nenhum ICP registrado</td></tr>`;
+  } else {
+    sorted.forEach(([key, val], i) => {
+      const numVal = parseFloat(val);
+      const barPct = Math.min(numVal, 100);
+      const barColor = numVal >= 90 ? '#00B894' : numVal >= 70 ? '#F39C12' : '#E74C3C';
+      rows += `<tr style="background:${i%2===0?'#faf5ff':'#fff'}">
+        <td style="padding:12px 18px;font-size:.9rem;font-weight:700;color:#2D1B45;border-bottom:1px solid #ede8f3">
+          ${getMonthLabel(key)}
+        </td>
+        <td style="padding:12px 18px;border-bottom:1px solid #ede8f3">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="flex:1;background:#ede8f3;border-radius:20px;height:10px;overflow:hidden">
+              <div style="width:${barPct}%;height:100%;background:${barColor};border-radius:20px;-webkit-print-color-adjust:exact;print-color-adjust:exact"></div>
+            </div>
+            <span style="font-size:1rem;font-weight:900;color:#8A05BE;min-width:52px;text-align:right">${val}%</span>
+          </div>
+        </td>
+      </tr>`;
+    });
+  }
+  const totalReg = sorted.length;
+  const avg = totalReg > 0
+    ? (sorted.reduce((s,[,v])=>s+parseFloat(v),0)/totalReg).toFixed(1)
+    : '—';
+
+  const html = `
+    <div class="print-report-header">
+      <h1>📊 ICP Mensal — Relatório de Resultados</h1>
+      <p>Gerado em ${dateStr} · ${totalReg} mês${totalReg!==1?'es':''} registrado${totalReg!==1?'s':''} · Média: ${avg}${totalReg>0?'%':''}</p>
+    </div>
+    <div class="print-deliveries">
+      <table style="width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(138,5,190,.12)">
+        <thead>
+          <tr style="background:#6B0099;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+            <th style="padding:13px 18px;text-align:left;color:#fff;font-size:.85rem;font-weight:800;letter-spacing:.6px;width:40%">📅 MÊS</th>
+            <th style="padding:13px 18px;text-align:left;color:#fff;font-size:.85rem;font-weight:800;letter-spacing:.6px">📊 RESULTADO ICP</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+        ${totalReg > 1 ? `<tfoot>
+          <tr style="background:#f0e6fa;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+            <td style="padding:12px 18px;font-weight:800;color:#6B0099;font-size:.88rem">📈 Média Geral</td>
+            <td style="padding:12px 18px;font-weight:900;color:#8A05BE;font-size:1.05rem">${avg}%</td>
+          </tr>
+        </tfoot>` : ''}
+      </table>
+    </div>`;
+
+  document.getElementById('printReport').innerHTML = html;
+  closeICPModal();
+  setTimeout(() => window.print(), 200);
+}
+
 function toggleSectionStatus(meetingId, secKey) {
   if (!currentUserId) { toast('⚠️ Selecione seu perfil'); return; }
   const m=meetings.find(x=>x.id===meetingId); if (!m) return;
@@ -1845,6 +2222,23 @@ function buildResumo(meetingId) {
       } else {
         html+=`<div class="resumo-obs-empty">Nenhuma ocorrência registrada.</div>`;
       }
+    } else if (sec.feedbackSection) {
+      // Feedbacks entries
+      const entries=sData.entries||[];
+      if (entries.length) {
+        html+=`<div style="margin-top:8px"><div class="tasks-label">Feedbacks (${entries.length}):</div><div style="display:flex;flex-direction:column;gap:5px">`;
+        entries.forEach(e=>{
+          const flagLabel=e.flag==='destaque'?'⭐ Merece destaque':'⚠️ Ponto de atenção';
+          const flagCls  =e.flag==='destaque'?'flag-destaque':'flag-atencao';
+          html+=`<div style="background:#fff;border-radius:6px;border:1.5px solid #e5e7eb;padding:7px 10px;border-left:3px solid ${e.flag==='destaque'?'#00B894':'#F39C12'}">
+            <span class="feedback-flag-chip ${flagCls}" style="font-size:.68rem;padding:1px 8px;margin-bottom:4px;display:inline-flex">${flagLabel}</span>
+            ${e.obs?`<div style="font-size:.8rem;color:#2D1B45;line-height:1.4;margin-top:3px">${esc(e.obs)}</div>`:''}
+          </div>`;
+        });
+        html+=`</div></div>`;
+      } else {
+        html+=`<div class="resumo-obs-empty">Nenhum feedback registrado.</div>`;
+      }
     } else if (sec.special) {
       // Folgas entries
       const entries=sData.entries||[];
@@ -1880,6 +2274,16 @@ function buildResumo(meetingId) {
 
     html+=`</div></div>`;
   });
+
+  // ICP Mensal no resumo
+  const monthKey = getMonthKey(m.date);
+  const icpVal = icpData[monthKey];
+  if (icpVal !== undefined && icpVal !== '') {
+    html+=`<div style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1.5px solid var(--nu-purple-light);border-radius:8px;padding:10px 14px;margin-top:4px;display:flex;align-items:center;gap:10px">
+      <span style="font-size:.78rem;font-weight:800;color:var(--nu-purple-dark)">📊 ICP Mensal — ${getMonthLabel(monthKey)}</span>
+      <span style="font-size:1.15rem;font-weight:900;color:var(--nu-purple)">${icpVal}</span>
+    </div>`;
+  }
 
   html+=`<div class="resumo-actions">
     <button class="btn btn-outline btn-sm" onclick="toggleResumo('${meetingId}')">Fechar</button>
