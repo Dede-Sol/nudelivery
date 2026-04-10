@@ -611,7 +611,8 @@
     #tab-diario .db-field input,#tab-diario .db-field select,#tab-diario .db-field textarea { border:1.5px solid var(--nu-gray-200);border-radius:var(--radius-sm);padding:9px 13px;font-size:.88rem;color:var(--nu-text);background:var(--nu-gray-100);transition:border-color .2s;outline:none;font-family:inherit;width:100%; }
     #tab-diario .db-field input:focus,#tab-diario .db-field select:focus,#tab-diario .db-field textarea:focus { border-color:var(--nu-purple);box-shadow:0 0 0 3px rgba(138,5,190,.12);background:#fff; }
     #tab-diario .db-field textarea { resize:vertical;min-height:76px;line-height:1.5; }
-    #tab-diario .db-field input[readonly] { background:var(--nu-purple-light);color:var(--nu-purple-dark);cursor:default; }
+    #tab-diario .db-field input[type="date"] { cursor:pointer; }
+    #tab-diario .db-field input[type="date"]::-webkit-calendar-picker-indicator { opacity:.6;cursor:pointer; }
     #tab-diario .db-g2 { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
     #tab-diario .db-g3 { display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px; }
     @media(max-width:620px){#tab-diario .db-g2,#tab-diario .db-g3{grid-template-columns:1fr;}}
@@ -879,9 +880,12 @@
       <!-- Automáticos -->
       <div class="db-card">
         <div class="db-card-title">🤖 Informações automáticas</div>
-        <div class="db-card-sub">Preenchidas automaticamente — confirme e ajuste se necessário</div>
+        <div class="db-card-sub">Preenchidas automaticamente — edite a data para registros retroativos</div>
         <div class="db-g3">
-          <div class="db-field"><label>Data</label><input type="date" id="db-data" readonly></div>
+          <div class="db-field">
+            <label>📅 Data <span style="font-size:.68rem;font-weight:400;color:var(--nu-gray-600);text-transform:none;letter-spacing:0">(retroativo? escolha outra data)</span></label>
+            <input type="date" id="db-data" style="cursor:pointer">
+          </div>
           <div class="db-field"><label>Hora de início</label><input type="time" id="db-hora-inicio"></div>
           <div class="db-field"><label>Hora de fim</label><input type="time" id="db-hora-fim"></div>
         </div>
